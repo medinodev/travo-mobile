@@ -1,0 +1,33 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color orange
+color purple_200
+color purple_500
+color purple_700
+color teal_200
+color teal_700
+color white
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+id appTitle
+id btnCadastrar
+id btnEntrar
+id editEmail
+id editSenha
+id logoFragment
+id logoIcon
+id main
+id txtEsqueciSenha
+layout activity_login
+layout activity_logo_fragment
+layout activity_main
+layout activity_main_activityhome
+layout activity_teste
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+style Base.Theme.ApplicationTravo
+style Theme.ApplicationTravo
+xml backup_rules
+xml data_extraction_rules
