@@ -19,11 +19,10 @@ id logoFragment
 id logoIcon
 id main
 id txtEsqueciSenha
+layout activity_cadastro
 layout activity_login
 layout activity_logo_fragment
-layout activity_main
 layout activity_main_activityhome
-layout activity_teste
 mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name

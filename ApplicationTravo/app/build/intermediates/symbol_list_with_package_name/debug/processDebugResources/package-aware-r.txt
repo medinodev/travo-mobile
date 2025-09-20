@@ -3672,11 +3672,10 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_cadastro
 layout activity_login
 layout activity_logo_fragment
-layout activity_main
 layout activity_main_activityhome
-layout activity_teste
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
