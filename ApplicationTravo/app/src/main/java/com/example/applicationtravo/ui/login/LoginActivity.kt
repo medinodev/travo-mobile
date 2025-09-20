@@ -10,6 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.applicationtravo.R
 import com.example.applicationtravo.ui.cadastro.CadastroActivity
 import com.example.applicationtravo.ui.home.HomeActivity
+import com.example.applicationtravo.ui.recuperacaoSenha.RecuperacaoDeSenhaActivity
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +20,7 @@ class LoginActivity : AppCompatActivity() {
 
         val btnCadastrar = findViewById<Button>(R.id.btnCadastrar)
         val btnEntrar = findViewById<Button>(R.id.btnEntrar)
+        val tvRecuperacaoDeSenha = findViewById<Button>(R.id.btnEntrar)
 
         btnCadastrar.setOnClickListener{
 
@@ -30,6 +32,12 @@ class LoginActivity : AppCompatActivity() {
 
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
+        }
+
+        tvRecuperacaoDeSenha.setOnClickListener {
+            val intent = Intent(this, RecuperacaoDeSenhaActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 }
