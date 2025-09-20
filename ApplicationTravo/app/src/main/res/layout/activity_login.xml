@@ -52,13 +52,14 @@
 
     <!-- Link de Esqueci Senha -->
     <TextView
-        android:id="@+id/txtEsqueciSenha"
+        android:id="@+id/tvRecuperacaoDeSenha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Esqueceu sua senha?"
+        android:textColor="@color/colorSecondary"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:layout_marginTop="12dp"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"/>
 
     <!-- Botões -->
     <LinearLayout
@@ -85,4 +86,7 @@
             android:textColor="@android:color/white"
             android:layout_marginStart="16dp"/>
     </LinearLayout>
+
+
+
 </LinearLayout>
