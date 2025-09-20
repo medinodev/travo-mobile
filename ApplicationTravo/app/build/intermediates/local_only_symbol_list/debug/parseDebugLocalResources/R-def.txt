@@ -1,23 +1,30 @@
 R_DEF: Internal format may change without notice
 local
 color black
+color colorBackground
+color colorPrimary
+color colorSecondary
+color error
+color grayDark
+color grayLight
+color info
 color orange
-color purple_200
-color purple_500
-color purple_700
-color teal_200
-color teal_700
+color success
+color warning
 color white
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 id appTitle
 id btnCadastrar
 id btnEntrar
+id editDataNascimento
 id editEmail
+id editNome
 id editSenha
 id logoFragment
 id logoIcon
 id main
+id tvVoltarLogin
 id txtEsqueciSenha
 layout activity_cadastro
 layout activity_home
