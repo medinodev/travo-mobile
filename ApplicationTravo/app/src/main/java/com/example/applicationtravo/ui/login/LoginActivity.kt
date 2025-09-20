@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.applicationtravo.R
 import com.example.applicationtravo.ui.cadastro.CadastroActivity
+import com.example.applicationtravo.ui.home.HomeActivity
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,10 +18,17 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         val btnCadastrar = findViewById<Button>(R.id.btnCadastrar)
+        val btnEntrar = findViewById<Button>(R.id.btnEntrar)
 
         btnCadastrar.setOnClickListener{
 
             val intent = Intent(this, CadastroActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnEntrar.setOnClickListener{
+
+            val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }
     }

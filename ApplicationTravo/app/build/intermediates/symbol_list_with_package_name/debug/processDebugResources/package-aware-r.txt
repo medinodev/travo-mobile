@@ -3673,6 +3673,7 @@ layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_cadastro
+layout activity_home
 layout activity_login
 layout activity_logo_fragment
 layout activity_main_activityhome

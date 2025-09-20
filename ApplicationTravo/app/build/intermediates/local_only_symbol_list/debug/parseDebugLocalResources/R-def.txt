@@ -20,6 +20,7 @@ id logoIcon
 id main
 id txtEsqueciSenha
 layout activity_cadastro
+layout activity_home
 layout activity_login
 layout activity_logo_fragment
 layout activity_main_activityhome

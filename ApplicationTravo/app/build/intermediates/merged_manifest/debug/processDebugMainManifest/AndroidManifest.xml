@@ -28,6 +28,9 @@
         android:testOnly="true"
         android:theme="@style/Theme.ApplicationTravo" >
         <activity
+            android:name="com.example.applicationtravo.ui.home.HomeActivity"
+            android:exported="false" />
+        <activity
             android:name="com.example.applicationtravo.ui.cadastro.CadastroActivity"
             android:exported="false" />
         <activity
