@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="96dp"
+    android:layout_marginVertical="6dp"
+    app:cardUseCompactPadding="true"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="12dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgPlace"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_report_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Cafeteria Jazz n Blues"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            app:layout_constraintStart_toEndOf="@id/imgPlace"
+            app:layout_constraintTop_toTopOf="@id/imgPlace"
+            app:layout_constraintEnd_toStartOf="@id/btnChevron" />
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Rua Genérica, 123"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            android:textColor="#7A7A7A"
+            app:layout_constraintStart_toEndOf="@id/imgPlace"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:layout_constraintEnd_toStartOf="@id/btnChevron" />
+
+        <ImageButton
+            android:id="@+id/btnChevron"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_chevron_rigth"
+            android:contentDescription="@string/content_details"
+            app:tint="#3A3A3A"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

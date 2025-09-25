@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ApplicationTravo</string>
+    <string name="content_image">Imagem do local</string>
+    <string name="content_details">Ver detalhes</string>
 </resources>

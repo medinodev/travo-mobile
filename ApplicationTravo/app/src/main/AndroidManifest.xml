@@ -13,6 +13,12 @@
         android:theme="@style/Theme.ApplicationTravo"
         tools:targetApi="31">
         <activity
+            android:name=".ui.favoritos.Favoritos"
+            android:exported="false" />
+        <activity
+            android:name=".ui.detalhesLocal.DetalhesLocal"
+            android:exported="false" />
+        <activity
             android:name=".ui.listaServicos.ListaServicos"
             android:exported="false" />
         <activity
