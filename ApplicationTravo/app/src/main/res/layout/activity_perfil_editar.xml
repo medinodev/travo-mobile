@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="24dp"
+    android:background="@color/light_pink"
+    tools:context=".ui.perfil.EditarPerfilActivity">
+
+    <!-- Foto do usuário -->
+    <ImageView
+        android:id="@+id/imgFotoUsuarioEditar"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/ic_launcher_foreground"
+        android:scaleType="centerCrop"
+        android:background="@drawable/circle_bg"
+        android:contentDescription="Foto do usuário" />
+
+    <Button
+        android:id="@+id/btnAlterarFoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alterar foto"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/orange"
+        android:textColor="@android:color/white"/>
+
+    <!-- Campos Nome / Bio / Telefone -->
+    <EditText
+        android:id="@+id/editNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nome"
+        android:layout_marginTop="16dp"
+        android:background="@android:drawable/edit_text"
+        android:padding="10dp" />
+
+    <EditText
+        android:id="@+id/editBio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Bio"
+        android:layout_marginTop="12dp"
+        android:background="@android:drawable/edit_text"
+        android:padding="10dp" />
+
+    <EditText
+        android:id="@+id/editTelefone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Telefone"
+        android:inputType="phone"
+        android:layout_marginTop="12dp"
+        android:background="@android:drawable/edit_text"
+        android:padding="10dp" />
+
+    <Button
+        android:id="@+id/btnSalvarPerfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Salvar"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/orange"
+        android:textColor="@android:color/white" />
+
+    <!-- Separador -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alterar senha"
+        android:textStyle="bold"
+        android:layout_marginTop="24dp"
+        android:textSize="16sp"/>
+
+    <!-- Campos de Senha -->
+    <EditText
+        android:id="@+id/editSenhaAntiga"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Senha antiga"
+        android:inputType="textPassword"
+        android:layout_marginTop="12dp"
+        android:background="@android:drawable/edit_text"
+        android:padding="10dp" />
+
+    <EditText
+        android:id="@+id/editSenhaNova"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nova senha"
+        android:inputType="textPassword"
+        android:layout_marginTop="12dp"
+        android:background="@android:drawable/edit_text"
+        android:padding="10dp" />
+
+    <EditText
+        android:id="@+id/editSenhaConfirmar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirme nova senha"
+        android:inputType="textPassword"
+        android:layout_marginTop="12dp"
+        android:background="@android:drawable/edit_text"
+        android:padding="10dp" />
+
+    <Button
+        android:id="@+id/btnSalvarSenha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Salvar"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/orange"
+        android:textColor="@android:color/white" />
+
+    <!-- Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        app:menu="@menu/bottom_nav_menu"
+        android:background="@color/orange" />
+
+</LinearLayout>
