@@ -28,6 +28,24 @@
         android:testOnly="true"
         android:theme="@style/Theme.ApplicationTravo" >
         <activity
+            android:name="com.example.applicationtravo.ui.restaurarSenha.RecuperarSenha"
+            android:exported="false" />
+        <activity
+            android:name="com.example.applicationtravo.ui.favoritos.Favoritos"
+            android:exported="false" />
+        <activity
+            android:name="com.example.applicationtravo.ui.detalhesLocal.DetalhesLocal"
+            android:exported="false" />
+        <activity
+            android:name="com.example.applicationtravo.ui.listaServicos.ListaServicos"
+            android:exported="false" />
+        <activity
+            android:name="com.example.applicationtravo.ui.listaCupons.ListaCupons"
+            android:exported="false" />
+        <activity
+            android:name="com.example.applicationtravo.ui.configuracoes.Configuracoes"
+            android:exported="false" />
+        <activity
             android:name="com.example.applicationtravo.ui.cadastro.CadastroActivity"
             android:exported="false" />
         <activity
