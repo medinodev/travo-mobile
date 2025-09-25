@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:gravity="center"
+    android:layout_margin="8dp">
+
+    <!-- Imagem do local (mockada por enquanto) -->
+    <ImageView
+        android:id="@+id/imgLocal"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_launcher_foreground"
+        android:scaleType="centerCrop"
+        android:background="@drawable/circle_bg"
+        android:contentDescription="Imagem do local visitado" />
+
+    <!-- Nome do local -->
+    <TextView
+        android:id="@+id/tvNomeLocal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome Local"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginTop="6dp"
+        android:gravity="center" />
+</LinearLayout>
