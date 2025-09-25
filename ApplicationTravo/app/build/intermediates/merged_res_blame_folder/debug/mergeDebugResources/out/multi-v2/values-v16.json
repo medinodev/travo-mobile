@@ -4,7 +4,7 @@
             "outputFile": "com.example.applicationtravo.app-mergeDebugResources-29:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\mayar\\.gradle\\caches\\8.11.1\\transforms\\2e355fbe8fe59cc5407000c654ab4b66\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
+                    "source": "C:\\Users\\livia\\.gradle\\caches\\8.11.1\\transforms\\2e355fbe8fe59cc5407000c654ab4b66\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\mayar\\.gradle\\caches\\8.11.1\\transforms\\8c4c3ff188aeab5230dcd74e319c1708\\transformed\\core-1.10.1\\res\\values-v16\\values-v16.xml",
+                    "source": "C:\\Users\\livia\\.gradle\\caches\\8.11.1\\transforms\\8c4c3ff188aeab5230dcd74e319c1708\\transformed\\core-1.10.1\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

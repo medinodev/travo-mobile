@@ -9,6 +9,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="white">#FFFFFFFF</color>
     <string name="app_name">ApplicationTravo</string>
+    <string name="content_details">Ver detalhes</string>
+    <string name="content_image">Imagem do local</string>
     <style name="Base.Theme.ApplicationTravo" parent="Theme.Material3.DayNight.NoActionBar">
         
         

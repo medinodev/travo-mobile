@@ -1,90 +1,134 @@
 [
     {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\layout_activity_logo_fragment.xml.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\layout\\activity_logo_fragment.xml"
+        "merged": "com.example.applicationtravo.app-debug-31:/drawable_ic_chevron_right.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/drawable/ic_chevron_right.xml"
     },
     {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\mipmap-xxhdpi\\ic_launcher_round.webp"
+        "merged": "com.example.applicationtravo.app-debug-31:/menu_toolbar_menu.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/menu/toolbar_menu.xml"
     },
     {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\drawable_ic_launcher_foreground.xml.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\drawable\\ic_launcher_foreground.xml"
+        "merged": "com.example.applicationtravo.app-debug-31:/drawable_circle_bg.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/drawable/circle_bg.xml"
     },
     {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\mipmap-mdpi\\ic_launcher.webp"
+        "merged": "com.example.applicationtravo.app-debug-31:/layout_activity_configuracoes.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/layout/activity_configuracoes.xml"
     },
     {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\mipmap-xxhdpi\\ic_launcher.webp"
+        "merged": "com.example.applicationtravo.app-debug-31:/layout_activity_logo_fragment.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/layout/activity_logo_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\xml_data_extraction_rules.xml.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\xml\\data_extraction_rules.xml"
+        "merged": "com.example.applicationtravo.app-debug-31:/layout_activity_lista_cupons.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/layout/activity_lista_cupons.xml"
+    },
+    {
+        "merged": "com.example.applicationtravo.app-debug-31:/color_selector_bottom_nav.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/color/selector_bottom_nav.xml"
+    },
+    {
+        "merged": "com.example.applicationtravo.app-debug-31:/layout_activity_main_activityhome.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/layout/activity_main_activityhome.xml"
+    },
+    {
+        "merged": "com.example.applicationtravo.app-debug-31:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.example.applicationtravo.app-main-33:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.applicationtravo.app-debug-31:/layout_item_local_visitado.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/layout/item_local_visitado.xml"
+    },
+    {
+        "merged": "com.example.applicationtravo.app-debug-31:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.applicationtravo.app-main-33:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.applicationtravo.app-debug-31:/mipmap-anydpi_ic_launcher.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/mipmap-anydpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.example.applicationtravo.app-debug-31:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.example.applicationtravo.app-debug-31:/layout_activity_favoritos.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/layout/activity_favoritos.xml"
+    },
+    {
+        "merged": "com.example.applicationtravo.app-debug-31:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.applicationtravo.app-main-33:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.applicationtravo.app-debug-31:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.applicationtravo.app-main-33:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.applicationtravo.app-debug-31:/xml_data_extraction_rules.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.example.applicationtravo.app-debug-31:/xml_backup_rules.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.example.applicationtravo.app-debug-31:/layout_activity_login.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/layout/activity_login.xml"
+    },
+    {
+        "merged": "com.example.applicationtravo.app-debug-31:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.applicationtravo.app-main-33:/mipmap-xxhdpi/ic_launcher_round.webp"
     },
     {
         "merged": "com.example.applicationtravo.app-debug-31:/layout_activity_cadastro.xml.flat",
         "source": "com.example.applicationtravo.app-main-33:/layout/activity_cadastro.xml"
     },
     {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\mipmap-xhdpi\\ic_launcher.webp"
+        "merged": "com.example.applicationtravo.app-debug-31:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.applicationtravo.app-main-33:/mipmap-hdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\mipmap-mdpi\\ic_launcher_round.webp"
+        "merged": "com.example.applicationtravo.app-debug-31:/layout_activity_perfil_editar.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/layout/activity_perfil_editar.xml"
     },
     {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\drawable_ic_launcher_background.xml.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\drawable\\ic_launcher_background.xml"
+        "merged": "com.example.applicationtravo.app-debug-31:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.applicationtravo.app-main-33:/mipmap-xxxhdpi/ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\mipmap-hdpi\\ic_launcher_round.webp"
+        "merged": "com.example.applicationtravo.app-debug-31:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.example.applicationtravo.app-main-33:/mipmap-mdpi/ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\mipmap-hdpi\\ic_launcher.webp"
+        "merged": "com.example.applicationtravo.app-debug-31:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.example.applicationtravo.app-main-33:/mipmap-hdpi/ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\mipmap-anydpi_ic_launcher.xml.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\mipmap-anydpi\\ic_launcher.xml"
+        "merged": "com.example.applicationtravo.app-debug-31:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.applicationtravo.app-main-33:/mipmap-xhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\xml_backup_rules.xml.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\xml\\backup_rules.xml"
+        "merged": "com.example.applicationtravo.app-debug-31:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/drawable/ic_launcher_foreground.xml"
     },
     {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\layout_activity_main_activityhome.xml.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\layout\\activity_main_activityhome.xml"
+        "merged": "com.example.applicationtravo.app-debug-31:/layout_activity_perfil.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/layout/activity_perfil.xml"
     },
     {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\mipmap-xxxhdpi\\ic_launcher.webp"
+        "merged": "com.example.applicationtravo.app-debug-31:/layout_item_favorito.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/layout/item_favorito.xml"
     },
     {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\mipmap-xhdpi\\ic_launcher_round.webp"
+        "merged": "com.example.applicationtravo.app-debug-31:/layout_activity_lista_servicos.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/layout/activity_lista_servicos.xml"
     },
     {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\layout_activity_teste.xml.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\layout\\activity_teste.xml"
+        "merged": "com.example.applicationtravo.app-debug-31:/mipmap-anydpi_ic_launcher_round.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/mipmap-anydpi/ic_launcher_round.xml"
     },
     {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
-    },
-    {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\layout_activity_main.xml.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\layout\\activity_main.xml"
-    },
-    {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\mipmap-anydpi_ic_launcher_round.xml.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\mipmap-anydpi\\ic_launcher_round.xml"
-    },
-    {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\layout_activity_login.xml.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\layout\\activity_login.xml"
+        "merged": "com.example.applicationtravo.app-debug-31:/menu_bottom_nav_menu.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/menu/bottom_nav_menu.xml"
     }
 ]
