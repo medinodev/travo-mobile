@@ -1,4 +1,4 @@
-package com.example.applicationtravo.ui.auth
+package com.example.applicationtravo.ui.restaurarSenha
 
 import android.content.Intent
 import android.os.Bundle
@@ -36,3 +36,5 @@ class RecuperarSenhaActivity : AppCompatActivity() {
         }
     }
 }
+
+annotation class RecuperarSenha

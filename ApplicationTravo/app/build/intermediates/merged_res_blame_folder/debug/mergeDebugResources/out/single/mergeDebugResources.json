@@ -8,24 +8,28 @@
         "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\mipmap-xxhdpi\\ic_launcher.webp"
     },
     {
+        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\drawable_search_bar_bg.xml.flat",
+        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\drawable\\search_bar_bg.xml"
+    },
+    {
         "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\color_selector_bottom_nav.xml.flat",
         "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\color\\selector_bottom_nav.xml"
-    },
-    {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\drawable_ic_arrow_right.xml.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\drawable\\ic_arrow_right.xml"
-    },
-    {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\mipmap-xhdpi\\ic_launcher.webp"
     },
     {
         "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\layout_activity_lista_cupons.xml.flat",
         "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\layout\\activity_lista_cupons.xml"
     },
     {
-        "merged": "com.example.applicationtravo.app-debug-31:/drawable_ic_info.xml.flat",
-        "source": "com.example.applicationtravo.app-main-33:/drawable/ic_info.xml"
+        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\mipmap-xhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\drawable_ic_arrow_right.xml.flat",
+        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\drawable\\ic_arrow_right.xml"
+    },
+    {
+        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\drawable_ic_home.xml.flat",
+        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\drawable\\ic_home.xml"
     },
     {
         "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\drawable_ic_launcher_background.xml.flat",
@@ -84,6 +88,10 @@
         "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\layout\\activity_logo_fragment.xml"
     },
     {
+        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\drawable_ic_info.xml.flat",
+        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\drawable\\ic_info.xml"
+    },
+    {
         "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\drawable_ic_help.xml.flat",
         "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\drawable\\ic_help.xml"
     },
@@ -104,12 +112,12 @@
         "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\layout\\activity_favoritos.xml"
     },
     {
-        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\drawable_circle_bg.xml.flat",
-        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\drawable\\circle_bg.xml"
-    },
-    {
         "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\layout_activity_detalhes_local.xml.flat",
         "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\layout\\activity_detalhes_local.xml"
+    },
+    {
+        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\drawable_circle_bg.xml.flat",
+        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\drawable\\circle_bg.xml"
     },
     {
         "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\mipmap-mdpi_ic_launcher_round.webp.flat",
@@ -138,6 +146,18 @@
     {
         "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\layout_activity_lista_servicos.xml.flat",
         "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\layout\\activity_lista_servicos.xml"
+    },
+    {
+        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\drawable_ic_money.xml.flat",
+        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\drawable\\ic_money.xml"
+    },
+    {
+        "merged": "com.example.applicationtravo.app-debug-31:/layout_item_favorito.xml.flat",
+        "source": "com.example.applicationtravo.app-main-33:/layout/item_favorito.xml"
+    },
+    {
+        "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\drawable_ic_settings.xml.flat",
+        "source": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-main-33:\\drawable\\ic_settings.xml"
     },
     {
         "merged": "C:\\Users\\mayar\\.gradle\\daemon\\8.11.1\\com.example.applicationtravo.app-debug-31:\\drawable_ic_accessibility.xml.flat",
