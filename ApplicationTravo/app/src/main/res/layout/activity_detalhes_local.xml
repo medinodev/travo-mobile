@@ -191,7 +191,6 @@
                 android:clipToPadding="false"
                 android:paddingEnd="6dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:orientation="horizontal"
                 tools:listitem="@layout/item_cupom" />
             <!-- AVALIAÇÕES -->
             <TextView

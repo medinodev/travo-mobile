@@ -24,9 +24,13 @@ drawable ic_arrow_right
 drawable ic_chevron_rigth
 drawable ic_expand_more
 drawable ic_help
+drawable ic_home
 drawable ic_info
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+drawable ic_money
+drawable ic_settings
+drawable search_bar_bg
 id action_menu
 id appTitle
 id bottomNav
@@ -35,6 +39,7 @@ id btnCadastrar
 id btnChevron
 id btnEditarPerfil
 id btnEntrar
+id btnRecuperarSenha
 id btnSalvarPerfil
 id btnSalvarSenha
 id btn_clear
@@ -48,7 +53,9 @@ id editSenhaAntiga
 id editSenhaConfirmar
 id editSenhaNova
 id editTelefone
+id etEmailRecuperacao
 id etSearch
+id fragmentLogo
 id imgAvatar
 id imgCapa
 id imgCupom
