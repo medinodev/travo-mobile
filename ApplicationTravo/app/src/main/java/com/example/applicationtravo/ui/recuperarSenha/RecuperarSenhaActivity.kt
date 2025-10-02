@@ -1,4 +1,4 @@
-package com.example.applicationtravo.ui.restaurarSenha
+package com.example.applicationtravo.ui.recuperarSenha
 
 import android.content.Intent
 import android.os.Bundle

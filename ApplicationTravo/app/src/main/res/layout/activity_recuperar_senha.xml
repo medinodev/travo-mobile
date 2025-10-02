@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-    <!-- Logo reaproveitando o fragmento -->
-    <fragment
-        android:id="@+id/fragmentLogo"
-        android:name="com.example.applicationtravo.ui.components.LogoFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/imageViewlogo"
+        android:layout_width="90dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_travo"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,28 +20,28 @@
 
     <!-- Título -->
     <TextView
-        android:id="@+id/tvTitulo"
+        android:id="@+id/textViewTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Recuperar Senha"
         android:textColor="@color/colorSecondary"
         android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/fragmentLogo"
+        android:fontFamily="@font/volkhov_bold"
+        app:layout_constraintTop_toBottomOf="@id/imageViewlogo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="32dp"/>
 
-    <!-- Campo de e-mail -->
+    <!-- Campo E-mail -->
     <EditText
-        android:id="@+id/etEmailRecuperacao"
+        android:id="@+id/editTextEmailRecuperacao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Digite seu e-mail"
         android:inputType="textEmailAddress"
         android:padding="12dp"
         android:backgroundTint="@color/colorSecondary"
-        app:layout_constraintTop_toBottomOf="@id/tvTitulo"
+        app:layout_constraintTop_toBottomOf="@id/textViewTitulo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="32dp"
@@ -48,14 +49,16 @@
         android:layout_marginTop="24dp"/>
 
     <!-- Botão Recuperar -->
-    <Button
-        android:id="@+id/btnRecuperarSenha"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonRecuperarSenha"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Recuperar"
-        android:backgroundTint="@color/colorPrimary"
-        android:textColor="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@id/etEmailRecuperacao"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/colorPrimary"
+        app:rippleColor="#40FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/editTextEmailRecuperacao"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="32dp"
@@ -64,7 +67,7 @@
 
     <!-- Botão Voltar -->
     <TextView
-        android:id="@+id/tvVoltarLogin"
+        android:id="@+id/textViewVoltarLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Voltar para Login"
@@ -72,7 +75,8 @@
         android:textSize="14sp"
         android:clickable="true"
         android:focusable="true"
-        app:layout_constraintTop_toBottomOf="@id/btnRecuperarSenha"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintTop_toBottomOf="@id/buttonRecuperarSenha"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"/>
