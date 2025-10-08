@@ -15,9 +15,9 @@ class RecuperarSenhaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recuperar_senha)
 
-        val etEmail = findViewById<EditText>(R.id.etEmailRecuperacao)
-        val btnRecuperar = findViewById<Button>(R.id.btnRecuperarSenha)
-        val tvVoltarLogin = findViewById<TextView>(R.id.tvVoltarLogin)
+        val etEmail = findViewById<EditText>(R.id.editTextEmailRecuperacao)
+        val btnRecuperar = findViewById<Button>(R.id.buttonRecuperarSenha)
+        val tvVoltarLogin = findViewById<TextView>(R.id.textViewVoltarLogin)
 
         btnRecuperar.setOnClickListener {
             val email = etEmail.text.toString().trim()
