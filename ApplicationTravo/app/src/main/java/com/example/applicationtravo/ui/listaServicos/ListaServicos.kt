@@ -10,12 +10,13 @@ import com.example.applicationtravo.R
 class ListaServicos : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_lista_servicos)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        val btnHome = findViewById<Button>(R.id.btnHome)
+        val btnConfiguracoes = findViewById<Button>(R.id.btnConfiguracoes)
+        val btnFiltros = findViewById<Button>(R.id.btnFiltros)
+        val btnAplicarFil = findViewById<Button>(R.id.btnAplicarFil)
+        val btnLimparFil = findViewById<Button>(R.id.btnLimparFil)
+        val btnServicos = findViewById<Button>(R.id.btnServicos)
+        val btnMenu = findViewById<TextView>(R.id.btnMenu)
     }
 }
