@@ -10,7 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.applicationtravo.R
 import com.example.applicationtravo.ui.cadastro.CadastroActivity
-import com.example.applicationtravo.ui.restaurarSenha.RecuperarSenha
+import com.example.applicationtravo.ui.recuperarSenha.RecuperarSenhaActivity
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         tvVoltarRestaurarSenha.setOnClickListener {
-            val intent = Intent(this, RecuperarSenha::class.java)
+            val intent = Intent(this, RecuperarSenhaActivity::class.java)
             startActivity(intent)
             finish()
         }
