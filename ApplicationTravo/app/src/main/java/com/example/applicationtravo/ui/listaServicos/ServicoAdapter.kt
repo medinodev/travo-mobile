@@ -22,7 +22,7 @@ class ServicoAdapter : RecyclerView.Adapter<ServicoAdapter.VH>() {
     inner class VH(view: View) : RecyclerView.ViewHolder(view) {
         val imgThumb: ImageView = view.findViewById(R.id.imgPlace)
         val tvNome: TextView = view.findViewById(R.id.tvTitle)
-        val tvEndereco: TextView = view.findViewById(R.id.tvEndereco)
+        val tvEndereco: TextView = view.findViewById(R.id.tvSubtitle)
         val ivArrow: ImageView = view.findViewById(R.id.btnChevron)
     }
 
