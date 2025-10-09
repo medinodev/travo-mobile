@@ -13,7 +13,12 @@ data class UsuariosResponse(
     @SerializedName("nome_completo")
     val nomeCompleto: String,
     val sobre: String?,
+    @SerializedName("foto_perfil")
     val fotoPerfil: String?,
+    @SerializedName("data_nascimento")
+    val dataNascimento: String?,
+    @SerializedName("tipo_plano")
     val tipoPlano: Int,
-    val createdAt: LocalDateTime,
+    @SerializedName("created_at")
+    val createdAt: String,
 )

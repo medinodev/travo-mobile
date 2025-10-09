@@ -9,6 +9,8 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.PATCH
 
 interface TravoServiceAPI {
 
@@ -20,4 +22,13 @@ interface TravoServiceAPI {
 
     @GET("usuarios")
     suspend fun getAllUsers():Response<List<UsuariosResponse>>
+
+    @GET("usuarios/{id}")
+    suspend fun getUserById(@Path("id") id: Int): Response<UsuariosResponse>
+
+    @PATCH("usuarios/{id}")
+    suspend fun updateUser(
+        @Path("id") id: Int,
+        @Body request: com.example.applicationtravo.models.UsuarioUpdateRequest
+    ): Response<UsuariosResponse>
 }

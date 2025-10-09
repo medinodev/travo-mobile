@@ -1,5 +1,29 @@
 # Gradle
 .gradle/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# Android/IDE
+local.properties
+*.iml
+.idea/
+.cxx/
+.externalNativeBuild/
+captures/
+.DS_Store
+
+# Keystores (if any)
+*.jks
+*.keystore
+
+# Logs
+*.log
+
+# APK outputs (covered by build/, but explicit is fine)
+app/build/outputs/
+# Gradle
+.gradle/
 build/
 */build/
 
