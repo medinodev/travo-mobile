@@ -1,75 +1,82 @@
 package com.example.applicationtravo.ui.listaServicos
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.applicationtravo.R
+import com.example.applicationtravo.retrofit.RetrofitService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ListaServicos : AppCompatActivity() {
 
+    private lateinit var recycler: RecyclerView
     private lateinit var cardFiltros: View
     private lateinit var btnToggleFiltros: ImageButton
 
-    companion object {
-        private const val STATE_FILTROS_VISIVEIS = "STATE_FILTROS_VISIVEIS"
-    }
+    private val adapter by lazy { ServicoAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_servicos)
 
+        recycler = findViewById(R.id.recycler_servicos)
         cardFiltros = findViewById(R.id.cardFiltros)
         btnToggleFiltros = findViewById(R.id.btnToggleFiltros)
 
-        // Restaura estado (default: GONE como está no XML)
-        val estavaVisivel = savedInstanceState?.getBoolean(STATE_FILTROS_VISIVEIS, false) ?: false
-        cardFiltros.visibility = if (estavaVisivel) View.VISIBLE else View.GONE
-        btnToggleFiltros.setImageResource(
-            if (estavaVisivel) R.drawable.ic_chevron_left_24 else R.drawable.ic_chevron_left_24
-        )
-        btnToggleFiltros.contentDescription = getString(
-            if (estavaVisivel) R.string.fechar_filtros else R.string.abrir_filtros
-        )
+        recycler.layoutManager = LinearLayoutManager(this)
+        recycler.adapter = adapter
 
-        btnToggleFiltros.setOnClickListener { alternarFiltros() }
-    }
-
-    private fun alternarFiltros() {
-        val abrir = cardFiltros.visibility != View.VISIBLE
-        if ( abrir ) {
-            // Mostra com leve slide da direita
-            cardFiltros.visibility = View.VISIBLE
-            cardFiltros.translationX = cardFiltros.width.toFloat()
-            cardFiltros.alpha = 0f
-            cardFiltros.animate()
-                .translationX(0f)
-                .alpha(1f)
-                .setDuration(180)
-                .start()
-
-            btnToggleFiltros.setImageResource(R.drawable.ic_chevron_left_24)
-            btnToggleFiltros.contentDescription = getString(R.string.fechar_filtros)
-        } else {
-            // Esconde com slide para a direita
-            cardFiltros.animate()
-                .translationX(cardFiltros.width.toFloat())
-                .alpha(0f)
-                .setDuration(180)
-                .withEndAction {
-                    cardFiltros.visibility = View.GONE
-                    btnToggleFiltros.setImageResource(R.drawable.ic_chevron_left_24)
-                    btnToggleFiltros.contentDescription = getString(R.string.abrir_filtros)
-                    // Reseta props pra próxima abertura
-                    cardFiltros.translationX = 0f
-                    cardFiltros.alpha = 1f
-                }
-                .start()
+        btnToggleFiltros.setOnClickListener {
+            val mostrar = cardFiltros.visibility != View.VISIBLE
+            cardFiltros.visibility = if (mostrar) View.VISIBLE else View.GONE
+            btnToggleFiltros.setImageResource(
+                if (mostrar) R.drawable.ic_chevron_left_24 else R.drawable.ic_chevron_left_24
+            )
         }
-    }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putBoolean(STATE_FILTROS_VISIVEIS, cardFiltros.visibility == View.VISIBLE)
-        super.onSaveInstanceState(outState)
+        val token = getSharedPreferences("TravoApp", Context.MODE_PRIVATE).getString("token", null)
+        val api = if (!token.isNullOrEmpty())
+            RetrofitService.getTravoServiceAPIWithToken(token)
+        else
+            RetrofitService.getTravoServiceAPI()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val resp = api.listarServicos() // suspend ok aqui
+                withContext(Dispatchers.Main) {
+                    if (resp.isSuccessful) {
+                        val lista = resp.body() ?: emptyList()
+                        adapter.submit(lista)
+                        Toast.makeText(
+                            this@ListaServicos,
+                            "Carregados ${lista.size} serviços",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            this@ListaServicos,
+                            "Erro ${resp.code()} ao listar serviços",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@ListaServicos,
+                        "Falha: ${e.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
     }
 }
