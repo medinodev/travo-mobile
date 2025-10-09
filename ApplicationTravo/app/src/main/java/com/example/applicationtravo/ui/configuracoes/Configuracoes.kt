@@ -1,10 +1,8 @@
 package com.example.applicationtravo.ui.configuracoes
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import android.widget.Button
 import com.example.applicationtravo.R
 
 class Configuracoes : AppCompatActivity() {
@@ -15,9 +13,11 @@ class Configuracoes : AppCompatActivity() {
         val btnAcessibilidade = findViewById<Button>(R.id.btnAcessibilidade)
         val btnSuporte = findViewById<Button>(R.id.btnSuporte)
         val btnInformacoes = findViewById<Button>(R.id.btnInformacoes)
-        val btnMenu = findViewById<TextView>(R.id.btnMenu)
+        //ADD depois
+        /*val btnMenu = findViewById<Button>(R.id.btnMenu)
         val btnHome = findViewById<Button>(R.id.btnHome)
         val btnConfiguracoes = findViewById<Button>(R.id.btnConfiguracoes)
-        val btnDescontos = findViewById<Button>(R.id.btnDescontos)
+        val btnDescontos = findViewById<Button>(R.id.btnDescontos)*/
+
     }
 }
