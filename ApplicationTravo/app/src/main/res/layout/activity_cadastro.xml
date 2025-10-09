@@ -27,7 +27,7 @@
 
     <!-- Nome -->
     <EditText
-        android:id="@+id/editNome"
+        android:id="@+id/editNomeFantasia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Digite seu nome ..."
@@ -46,6 +46,15 @@
 
     <!-- Senha -->
     <EditText
+        android:id="@+id/editTelefone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:background="@android:drawable/edit_text"
+        android:hint="Digite seu telefone"
+        android:inputType="date" />
+
+    <EditText
         android:id="@+id/editSenha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,14 +64,6 @@
         android:layout_marginBottom="12dp"/>
 
     <!-- Data de Nascimento -->
-    <EditText
-        android:id="@+id/editDataNascimento"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Digite a data de Nascimento"
-        android:inputType="date"
-        android:background="@android:drawable/edit_text"
-        android:layout_marginBottom="24dp"/>
 
     <!-- Botão Cadastrar -->
     <Button
