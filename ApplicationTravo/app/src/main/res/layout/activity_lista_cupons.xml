@@ -53,21 +53,29 @@
 
             <Button
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="Perto de mim" />
 
             <Button
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="Favoritos" />
 
             <Button
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="Restaurantes" />
 
             <Button
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Cinemas" />
         </LinearLayout>
     </HorizontalScrollView>
@@ -101,6 +109,8 @@
                 android:layout_height="24dp"
                 android:src="@drawable/ic_money" />
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Descontos"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -117,6 +127,8 @@
                 android:layout_height="24dp"
                 android:src="@drawable/ic_home" />
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Home"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -133,6 +145,8 @@
                 android:layout_height="24dp"
                 android:src="@drawable/ic_settings" />
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Configurações"
                 android:textSize="12sp" />
         </LinearLayout>
