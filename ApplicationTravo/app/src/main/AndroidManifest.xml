@@ -23,7 +23,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.listaServicos.ListaServicos"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ui.listaCupons.ListaCupons"
             android:exported="false" />

@@ -2,4 +2,8 @@
     <string name="app_name">ApplicationTravo</string>
     <string name="content_image">Imagem do local</string>
     <string name="content_details">Ver detalhes</string>
+    <string name="content_desc_layout">Alternar layout</string>
+    <string name="abrir_filtros">Abrir filtros</string>
+    <string name="fechar_filtros">Fechar filtros</string>
+
 </resources>
