@@ -22,7 +22,7 @@ object RetrofitService {
     }
 
     fun getTravoServiceAPIWithToken(token: String): TravoServiceAPI {
-        if(travoServiceAPI == null){
+        if(travoServiceAPIWithToken == null){
 
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(AuthInterceptor(token))
@@ -34,8 +34,8 @@ object RetrofitService {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 
-            this.travoServiceAPI = retrofit.create(TravoServiceAPI::class.java)
+            this.travoServiceAPIWithToken = retrofit.create(TravoServiceAPI::class.java)
         }
-        return travoServiceAPI!!
+        return travoServiceAPIWithToken!!
     }
 }

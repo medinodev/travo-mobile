@@ -8,6 +8,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.applicationtravo.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.content.Context
+import com.example.applicationtravo.retrofit.RetrofitService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import android.util.Base64
+import org.json.JSONObject
+import com.example.applicationtravo.models.UsuarioUpdateRequest
 
 class PerfilEditarActivity : AppCompatActivity() {
 
@@ -44,6 +53,31 @@ class PerfilEditarActivity : AppCompatActivity() {
 
         bottomNav = findViewById(R.id.bottomNav)
 
+        // Prefill - buscar usuário atual
+        val token = getSharedPreferences("TravoApp", Context.MODE_PRIVATE).getString("token", null)
+        if (!token.isNullOrEmpty()) {
+            val userId = extractUserIdFromJwt(token)
+            if (userId != null) {
+                val api = RetrofitService.getTravoServiceAPIWithToken(token)
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        val resp = api.getUserById(userId)
+                        withContext(Dispatchers.Main) {
+                            if (resp.isSuccessful) {
+                                val u = resp.body()
+                                if (u != null) {
+                                    editNome.setText(u.nomeUsuario.ifEmpty { u.nomeCompleto })
+                                    editBio.setText(u.sobre ?: "")
+                                }
+                            }
+                        }
+                    } catch (_: Exception) {
+                        // Silencia, pois é prefill opcional
+                    }
+                }
+            }
+        }
+
         // Listener - alterar foto
         btnAlterarFoto.setOnClickListener {
             Toast.makeText(this, "Alterar foto (implementar lógica)", Toast.LENGTH_SHORT).show()
@@ -54,10 +88,40 @@ class PerfilEditarActivity : AppCompatActivity() {
         btnSalvarPerfil.setOnClickListener {
             val nome = editNome.text.toString()
             val bio = editBio.text.toString()
-            val telefone = editTelefone.text.toString()
+            val token = getSharedPreferences("TravoApp", Context.MODE_PRIVATE).getString("token", null)
+            if (token.isNullOrEmpty()) {
+                Toast.makeText(this, "Sessão expirada.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val userId = extractUserIdFromJwt(token)
+            if (userId == null) {
+                Toast.makeText(this, "Usuário inválido.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
-            // Aqui você pode validar e salvar no banco/API
-            Toast.makeText(this, "Perfil salvo: $nome", Toast.LENGTH_SHORT).show()
+            val api = RetrofitService.getTravoServiceAPIWithToken(token)
+            val request = UsuarioUpdateRequest(
+                nomeUsuario = nome,
+                sobre = bio
+            )
+
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val response = api.updateUser(userId, request)
+                    withContext(Dispatchers.Main) {
+                        if (response.isSuccessful) {
+                            Toast.makeText(this@PerfilEditarActivity, "Perfil salvo!", Toast.LENGTH_SHORT).show()
+                            finish()
+                        } else {
+                            Toast.makeText(this@PerfilEditarActivity, "Erro ao salvar perfil", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@PerfilEditarActivity, "Falha: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
         }
 
         // Listener - salvar senha
@@ -72,6 +136,18 @@ class PerfilEditarActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "As senhas não coincidem", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    private fun extractUserIdFromJwt(token: String): Int? {
+        return try {
+            val parts = token.split(".")
+            if (parts.size < 2) return null
+            val payloadJson = String(Base64.decode(parts[1], Base64.URL_SAFE or Base64.NO_WRAP))
+            val obj = JSONObject(payloadJson)
+            obj.optInt("id").takeIf { it != 0 }
+        } catch (e: Exception) {
+            null
         }
     }
 }
