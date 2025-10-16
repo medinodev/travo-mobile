@@ -1,49 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF6FC">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <!-- Toolbar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:background="?attr/colorSurface"
+        app:title="Configurações"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-        <Button
-            android:id="@+id/btnNotificacao"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Notificações"
-            android:backgroundTint="@color/warning"
-            android:textColor="@color/black"
-            />
-           <Button
-               android:id="@+id/btnAcessibilidade"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:text="Acessibilidade"
-               android:backgroundTint="@color/warning"
-               android:textColor="@color/black"
-               />
-        <Button
-            android:id="@+id/btnSuporte"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Suporte"
-            android:backgroundTint="@color/warning"
-            android:textColor="@color/black"
-            />
+    <!-- Conteúdo rolável -->
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <Button
-            android:id="@+id/btnInformacoes"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Informações"
-            android:backgroundTint="@color/warning"
-            android:textColor="@color/black"
-            />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-    </LinearLayout>
-</ScrollView>
+            <Button
+                android:id="@+id/btnNotificacao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Notificações"
+                android:backgroundTint="@color/warning"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/btnAcessibilidade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Acessibilidade"
+                android:backgroundTint="@color/warning"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/btnSuporte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Suporte"
+                android:backgroundTint="@color/warning"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/btnInformacoes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Informações"
+                android:backgroundTint="@color/warning"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:background="#FFD398"
+        app:menu="@menu/bottom_nav_menu"
+        app:itemIconTint="@color/selector_bottom_nav"
+        app:itemTextColor="@color/selector_bottom_nav"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

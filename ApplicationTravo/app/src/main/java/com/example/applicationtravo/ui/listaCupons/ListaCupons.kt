@@ -1,21 +1,38 @@
 package com.example.applicationtravo.ui.listaCupons
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import android.widget.Button
-import android.widget.TextView
 import com.example.applicationtravo.R
+import com.example.applicationtravo.ui.configuracoes.Configuracoes
+import com.example.applicationtravo.ui.listaServicos.ListaServicos
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ListaCupons : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_cupons)
-        /*
-        val btnFiltros = findViewById<Button>(R.id.btnFiltros)
-        val btnHome = findViewById<Button>(R.id.btnHome)
-        val btnConfiguracoes = findViewById<Button>(R.id.btnConfiguracoes)
-        val btnDescontos = findViewById<Button>(R.id.btnDescontos)
-        val btnMenu = findViewById<TextView>(R.id.btnMenu)
-         */
+
+        // ===== Bottom Navigation =====
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
+        bottomNav.selectedItemId = R.id.nav_descontos
+
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    startActivity(Intent(this, ListaServicos::class.java))
+                    overridePendingTransition(0, 0)
+                    true
+                }
+                R.id.nav_descontos -> true
+                R.id.nav_config -> {
+                    startActivity(Intent(this, Configuracoes::class.java))
+                    overridePendingTransition(0, 0)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 }
