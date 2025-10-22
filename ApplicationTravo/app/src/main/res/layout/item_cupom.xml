@@ -29,13 +29,4 @@
         android:text="Válido até 25/12/2025"
         android:textColor="#666"
         android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/txtDistancia"
-        android:layout_width="57dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:text="1.2 km"
-        android:textColor="#000"
-        android:textSize="12sp" />
 </LinearLayout>

@@ -8,14 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.applicationtravo.R
 import com.example.applicationtravo.models.CupomResponse
 
-class CupomAdapter(private val lista: List<CupomResponse>) :
+class CupomAdapter(private var lista: List<CupomResponse>) :
     RecyclerView.Adapter<CupomAdapter.CupomViewHolder>() {
 
+    private var listaOriginal: List<CupomResponse> = lista.toList()
+
     inner class CupomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val nome: TextView = view.findViewById(R.id.txtDesconto) // Nome do cupom
-        val descricao: TextView = view.findViewById(R.id.txtLoja) // Descrição curta
-        val validade: TextView = view.findViewById(R.id.txtValidade) // Data de expiração
-        val codigo: TextView = view.findViewById(R.id.txtDistancia) // Código do cupom
+        val nome: TextView = view.findViewById(R.id.txtDesconto)
+        val descricao: TextView = view.findViewById(R.id.txtLoja)
+        val validade: TextView = view.findViewById(R.id.txtValidade)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CupomViewHolder {
@@ -26,12 +27,19 @@ class CupomAdapter(private val lista: List<CupomResponse>) :
 
     override fun onBindViewHolder(holder: CupomViewHolder, position: Int) {
         val cupom = lista[position]
-
         holder.nome.text = cupom.nome
         holder.descricao.text = cupom.descricao ?: "Sem descrição"
         holder.validade.text = "Válido até: ${cupom.expiration ?: "Indefinido"}"
-        holder.codigo.text = "Código: ${cupom.codigo ?: "-"}"
     }
 
     override fun getItemCount(): Int = lista.size
+
+    fun filter(query: String) {
+        lista = if (query.isEmpty()) {
+            listaOriginal
+        } else {
+            listaOriginal.filter { it.nome.contains(query, ignoreCase = true) }
+        }
+        notifyDataSetChanged()
+    }
 }

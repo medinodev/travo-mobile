@@ -2,14 +2,18 @@ package com.example.applicationtravo.ui.listaCupons
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.widget.EditText
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.applicationtravo.R
-import com.example.applicationtravo.retrofit.RetrofitService
 import com.example.applicationtravo.models.CupomResponse
+import com.example.applicationtravo.retrofit.RetrofitService
 import com.example.applicationtravo.ui.configuracoes.Configuracoes
 import com.example.applicationtravo.ui.listaServicos.ListaServicos
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -19,6 +23,8 @@ class ListaCupons : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: CupomAdapter
+    private lateinit var searchEditText: EditText
+    private lateinit var clearButton: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,26 +33,13 @@ class ListaCupons : AppCompatActivity() {
         recyclerView = findViewById(R.id.recycler_cupons)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        carregarCupons() // 🔥 chama a API ao abrir a tela
+        searchEditText = findViewById(R.id.search_cupons)
+        clearButton = findViewById(R.id.btn_clear)
 
-        // ===== Bottom Navigation =====
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        bottomNav.selectedItemId = R.id.nav_descontos
+        carregarCupons()
 
-        bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home -> {
-                    startActivity(Intent(this, ListaServicos::class.java))
-                    true
-                }
-                R.id.nav_descontos -> true
-                R.id.nav_config -> {
-                    startActivity(Intent(this, Configuracoes::class.java))
-                    true
-                }
-                else -> false
-            }
-        }
+        configurarBottomNavigation()
+        configurarBusca()
     }
 
     private fun carregarCupons() {
@@ -60,7 +53,6 @@ class ListaCupons : AppCompatActivity() {
                     return@launch
                 }
 
-                // 🔥 Usa Retrofit autenticado
                 val response = RetrofitService.getTravoServiceAPIWithToken(token)
                     .listarCuponsDoServico()
 
@@ -79,4 +71,42 @@ class ListaCupons : AppCompatActivity() {
         }
     }
 
+    private fun configurarBusca() {
+        searchEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (::adapter.isInitialized) {
+                    adapter.filter(s.toString())
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+
+        clearButton.setOnClickListener {
+            searchEditText.text.clear()
+        }
+    }
+
+    private fun configurarBottomNavigation() {
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
+        bottomNav.selectedItemId = R.id.nav_descontos
+
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    startActivity(Intent(this, ListaServicos::class.java))
+                    true
+                }
+                R.id.nav_descontos -> true
+                R.id.nav_config -> {
+                    startActivity(Intent(this, Configuracoes::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
+    }
 }
