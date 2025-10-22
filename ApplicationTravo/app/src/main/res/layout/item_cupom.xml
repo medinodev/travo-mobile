@@ -1,46 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="180dp"
-    android:layout_height="match_parent"
-    android:layout_marginEnd="8dp"
-    app:cardCornerRadius="14dp"
-    app:cardElevation="2dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/bg_card_cupom"
+    android:layout_marginBottom="8dp"
+    android:elevation="2dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:gravity="center">
+    <TextView
+        android:id="@+id/txtDesconto"
+        android:text="Desconto de 20%"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="#000" android:layout_height="20dip" android:layout_width="300dip"/>
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imgCupom"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:src="@android:drawable/ic_menu_gallery"
-            android:contentDescription="@string/content_image"
-            android:scaleType="centerCrop"
-            app:cornerFamily="rounded"
-            app:cornerSize="12dp"
-            app:strokeColor="#22000000"
-            app:strokeWidth="1dp" />
+    <TextView
+        android:id="@+id/txtLoja"
+        android:layout_width="252dp"
+        android:layout_height="wrap_content"
+        android:text="Restaurante Central"
+        android:textColor="#444"
+        android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/tvCupomTitulo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Combo Burger"
-            android:textAlignment="center"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvCupomSub"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="10% OFF"
-            android:textAlignment="center"
-            android:textColor="#333333" />
-    </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+    <TextView
+        android:id="@+id/txtValidade"
+        android:layout_width="214dp"
+        android:layout_height="wrap_content"
+        android:text="Válido até 25/12/2025"
+        android:textColor="#666"
+        android:textSize="12sp" />
+</LinearLayout>
