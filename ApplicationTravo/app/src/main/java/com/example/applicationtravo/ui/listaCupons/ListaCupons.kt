@@ -22,13 +22,13 @@ class ListaCupons : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_home -> {
                     startActivity(Intent(this, ListaServicos::class.java))
-                    overridePendingTransition(0, 0)
+
                     true
                 }
                 R.id.nav_descontos -> true
                 R.id.nav_config -> {
                     startActivity(Intent(this, Configuracoes::class.java))
-                    overridePendingTransition(0, 0)
+
                     true
                 }
                 else -> false

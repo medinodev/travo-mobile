@@ -15,6 +15,7 @@ import com.example.applicationtravo.ui.listaCupons.ListaCupons
 import com.example.applicationtravo.ui.recuperarSenha.RecuperarSenhaActivity
 import com.example.applicationtravo.models.LoginRequest
 import com.example.applicationtravo.retrofit.RetrofitService
+import com.example.applicationtravo.ui.TesteHomeActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -83,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
                                     Toast.LENGTH_SHORT
                                 ).show()
 
-                                val intent = Intent(this@LoginActivity, ListaCupons::class.java)
+                                val intent = Intent(this@LoginActivity, TesteHomeActivity::class.java)
                                 startActivity(intent)
                                 finish()
                             }
