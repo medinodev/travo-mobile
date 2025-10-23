@@ -20,8 +20,7 @@ class ListaServicos : AppCompatActivity() {
     private lateinit var recycler: RecyclerView
     private lateinit var cardFiltros: View
     private lateinit var btnToggleFiltros: ImageButton
-
-    private val adapter by lazy { ServicoAdapter() }
+    private lateinit var adapter: ServicoAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +29,17 @@ class ListaServicos : AppCompatActivity() {
         recycler = findViewById(R.id.recycler_servicos)
         cardFiltros = findViewById(R.id.cardFiltros)
         btnToggleFiltros = findViewById(R.id.btnToggleFiltros)
+
+        // cria o adapter com o clique
+        adapter = ServicoAdapter { servico ->
+            val intent = android.content.Intent(
+                this@ListaServicos,
+                com.example.applicationtravo.ui.detalhesLocal.DetalhesLocal::class.java
+            )
+            // ajuste o campo conforme seu model de listagem (assumindo Int)
+            intent.putExtra("SERVICO_ID", servico.id)
+            startActivity(intent)
+        }
 
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = adapter
