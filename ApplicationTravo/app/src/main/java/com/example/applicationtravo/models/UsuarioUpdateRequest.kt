@@ -8,6 +8,7 @@ data class UsuarioUpdateRequest(
     @SerializedName("nome_completo") val nomeCompleto: String? = null,
     val sobre: String? = null,
     @SerializedName("foto_perfil") val fotoPerfil: String? = null,
+    val telefone: String? = null,
 )
 
 

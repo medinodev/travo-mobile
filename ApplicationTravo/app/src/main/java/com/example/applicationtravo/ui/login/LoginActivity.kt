@@ -11,7 +11,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.applicationtravo.R
 import com.example.applicationtravo.ui.cadastro.CadastroActivity
-import com.example.applicationtravo.ui.listaCupons.ListaCupons
 import com.example.applicationtravo.ui.recuperarSenha.RecuperarSenhaActivity
 import com.example.applicationtravo.models.LoginRequest
 import com.example.applicationtravo.retrofit.RetrofitService
@@ -31,6 +30,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        println("DEBUG: LoginActivity onCreate INICIADO")
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
 
@@ -65,7 +65,12 @@ class LoginActivity : AppCompatActivity() {
 
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
+                        println("DEBUG: Tentando fazer login com email: $email")
                         val response = travoServiceAPI.login(loginRequest)
+                        println("DEBUG: Response code: ${response.code()}")
+                        println("DEBUG: Response body: ${response.body()}")
+                        println("DEBUG: Response error: ${response.errorBody()?.string()}")
+                        
                         if (response.isSuccessful) {
                             val loginResponse = response.body()
 
@@ -84,6 +89,7 @@ class LoginActivity : AppCompatActivity() {
                                     Toast.LENGTH_SHORT
                                 ).show()
 
+                                println("DEBUG: Redirecionando para TesteHomeActivity")
                                 val intent = Intent(this@LoginActivity, TesteHomeActivity::class.java)
                                 startActivity(intent)
                                 finish()
@@ -98,6 +104,8 @@ class LoginActivity : AppCompatActivity() {
                             }
                         }
                     } catch (e: Exception) {
+                        println("DEBUG: Erro no login: ${e.message}")
+                        e.printStackTrace()
                         withContext(Dispatchers.Main) {
                             Toast.makeText(
                                 this@LoginActivity,

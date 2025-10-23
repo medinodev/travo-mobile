@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:padding="24dp"
-    android:background="@color/black"
+    android:background="@color/colorBackground"
     tools:context=".ui.perfil.PerfilActivity">
 
     <!-- Logo -->
@@ -47,7 +47,8 @@
                 android:layout_height="wrap_content"
                 android:text="João Novais"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/colorSecondary" />
 
             <TextView
                 android:id="@+id/tvBioUsuario"
@@ -55,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:text="Explorador de coração, sempre em busca de novos destinos."
                 android:textSize="14sp"
-                android:textColor="#666666"
+                android:textColor="@color/grayDark"
                 android:maxLines="2" />
         </LinearLayout>
     </LinearLayout>
@@ -66,6 +67,7 @@
         android:layout_height="wrap_content"
         android:text="E-mail"
         android:textSize="14sp"
+        android:textColor="@color/colorSecondary"
         android:layout_marginTop="24dp" />
 
     <LinearLayout
@@ -79,7 +81,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="carlosnovais@gmail.com" />
+            android:text="carlosnovais@gmail.com"
+            android:textColor="@color/black" />
 
         <!-- Botão Editar Perfil -->
         <Button
@@ -100,13 +103,31 @@
         android:layout_height="wrap_content"
         android:text="Data de Nascimento"
         android:textSize="14sp"
+        android:textColor="@color/colorSecondary"
         android:layout_marginTop="16dp" />
 
     <TextView
         android:id="@+id/tvNascimentoUsuario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="10/10/1990" />
+        android:text="10/10/1990"
+        android:textColor="@color/black" />
+
+    <!-- Telefone -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Telefone"
+        android:textSize="14sp"
+        android:textColor="@color/colorSecondary"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/tvTelefoneUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="(11) 99999-9999"
+        android:textColor="@color/black" />
 
     <!-- Locais Visitados -->
     <TextView
@@ -115,6 +136,7 @@
         android:text="Locais Visitados →"
         android:textStyle="bold"
         android:textSize="16sp"
+        android:textColor="@color/colorSecondary"
         android:layout_marginTop="24dp" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -132,6 +154,6 @@
         android:layout_height="56dp"
         android:layout_marginTop="24dp"
         app:menu="@menu/bottom_nav_menu"
-        android:background="@color/orange" />
+        android:background="@color/colorPrimary" />
 
 </LinearLayout>

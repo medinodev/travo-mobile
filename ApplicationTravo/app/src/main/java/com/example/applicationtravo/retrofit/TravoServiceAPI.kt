@@ -8,6 +8,7 @@ import com.example.applicationtravo.models.RegistroRequest
 import com.example.applicationtravo.models.ReviewResponse
 import com.example.applicationtravo.models.ServicoListagemResponse
 import com.example.applicationtravo.models.UsuariosResponse
+import com.example.applicationtravo.models.ChangePasswordRequest
 
 import retrofit2.Response
 import retrofit2.http.Body
@@ -36,6 +37,12 @@ interface TravoServiceAPI {
         @Path("id") id: Int,
         @Body request: com.example.applicationtravo.models.UsuarioUpdateRequest
     ): Response<UsuariosResponse>
+
+    @PATCH("usuarios/{id}/senha")
+    suspend fun changePassword(
+        @Path("id") id: Int,
+        @Body request: ChangePasswordRequest
+    ): Response<Unit>
 
     // SERVIÇOS
     @GET("servicos")
