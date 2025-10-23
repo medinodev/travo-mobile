@@ -17,6 +17,7 @@ import kotlinx.coroutines.withContext
 import android.util.Base64
 import org.json.JSONObject
 import com.example.applicationtravo.models.UsuarioUpdateRequest
+import com.example.applicationtravo.models.ChangePasswordRequest
 
 class PerfilEditarActivity : AppCompatActivity() {
 
@@ -68,6 +69,7 @@ class PerfilEditarActivity : AppCompatActivity() {
                                 if (u != null) {
                                     editNome.setText(u.nomeUsuario.ifEmpty { u.nomeCompleto })
                                     editBio.setText(u.sobre ?: "")
+                                    editTelefone.setText(u.telefone ?: "")
                                 }
                             }
                         }
@@ -88,6 +90,13 @@ class PerfilEditarActivity : AppCompatActivity() {
         btnSalvarPerfil.setOnClickListener {
             val nome = editNome.text.toString()
             val bio = editBio.text.toString()
+            val telefone = editTelefone.text.toString()
+            
+            if (nome.isBlank()) {
+                Toast.makeText(this, "Nome é obrigatório", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            
             val token = getSharedPreferences("TravoApp", Context.MODE_PRIVATE).getString("token", null)
             if (token.isNullOrEmpty()) {
                 Toast.makeText(this, "Sessão expirada.", Toast.LENGTH_SHORT).show()
@@ -102,7 +111,8 @@ class PerfilEditarActivity : AppCompatActivity() {
             val api = RetrofitService.getTravoServiceAPIWithToken(token)
             val request = UsuarioUpdateRequest(
                 nomeUsuario = nome,
-                sobre = bio
+                sobre = bio,
+                telefone = telefone.ifEmpty { null }
             )
 
             CoroutineScope(Dispatchers.IO).launch {
@@ -113,7 +123,8 @@ class PerfilEditarActivity : AppCompatActivity() {
                             Toast.makeText(this@PerfilEditarActivity, "Perfil salvo!", Toast.LENGTH_SHORT).show()
                             finish()
                         } else {
-                            Toast.makeText(this@PerfilEditarActivity, "Erro ao salvar perfil", Toast.LENGTH_SHORT).show()
+                            val errorBody = response.errorBody()?.string()
+                            Toast.makeText(this@PerfilEditarActivity, "Erro ao salvar perfil: $errorBody", Toast.LENGTH_LONG).show()
                         }
                     }
                 } catch (e: Exception) {
@@ -130,11 +141,58 @@ class PerfilEditarActivity : AppCompatActivity() {
             val nova = editSenhaNova.text.toString()
             val confirmar = editSenhaConfirmar.text.toString()
 
-            if (nova == confirmar) {
-                Toast.makeText(this, "Senha alterada!", Toast.LENGTH_SHORT).show()
-                // Aqui você pode implementar a lógica de update de senha
-            } else {
+            if (antiga.isBlank() || nova.isBlank() || confirmar.isBlank()) {
+                Toast.makeText(this, "Todos os campos de senha são obrigatórios", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (nova != confirmar) {
                 Toast.makeText(this, "As senhas não coincidem", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (nova.length < 6) {
+                Toast.makeText(this, "Nova senha deve ter pelo menos 6 caracteres", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val token = getSharedPreferences("TravoApp", Context.MODE_PRIVATE).getString("token", null)
+            if (token.isNullOrEmpty()) {
+                Toast.makeText(this, "Sessão expirada.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val userId = extractUserIdFromJwt(token)
+            if (userId == null) {
+                Toast.makeText(this, "Usuário inválido.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val api = RetrofitService.getTravoServiceAPIWithToken(token)
+            val request = ChangePasswordRequest(
+                senhaAtual = antiga,
+                novaSenha = nova
+            )
+
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val response = api.changePassword(userId, request)
+                    withContext(Dispatchers.Main) {
+                        if (response.isSuccessful) {
+                            Toast.makeText(this@PerfilEditarActivity, "Senha alterada com sucesso!", Toast.LENGTH_SHORT).show()
+                            // Limpar campos
+                            editSenhaAntiga.text.clear()
+                            editSenhaNova.text.clear()
+                            editSenhaConfirmar.text.clear()
+                        } else {
+                            val errorBody = response.errorBody()?.string()
+                            Toast.makeText(this@PerfilEditarActivity, "Erro ao alterar senha: $errorBody", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@PerfilEditarActivity, "Falha: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
+                }
             }
         }
     }

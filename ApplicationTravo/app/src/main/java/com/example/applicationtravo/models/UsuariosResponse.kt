@@ -19,6 +19,7 @@ data class UsuariosResponse(
     val dataNascimento: String?,
     @SerializedName("tipo_plano")
     val tipoPlano: Int,
+    val telefone: String?,
     @SerializedName("created_at")
     val createdAt: String,
 )

@@ -21,6 +21,7 @@ class TesteHomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        println("DEBUG: TesteHomeActivity onCreate chamado")
         setContentView(R.layout.activity_teste_home)
 
         findViewById<Button>(R.id.btnCadastro).setOnClickListener {
