@@ -32,7 +32,9 @@ object RetrofitService {
                 .build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl("http://192.168.0.245:3000/rest/v1/")
+                //.baseUrl("http://192.168.0.245:3000/rest/v1/")
+                //.baseUrl("http://192.168.0.5:3000/rest/v1/")
+                .baseUrl("http://10.0.2.2:3000/rest/v1/")
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
