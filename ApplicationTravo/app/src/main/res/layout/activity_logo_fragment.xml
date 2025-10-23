@@ -22,4 +22,5 @@
         android:layout_marginStart="8dp"
         android:src="@drawable/ic_launcher_foreground"
         android:contentDescription="Logo" />
+
 </LinearLayout>

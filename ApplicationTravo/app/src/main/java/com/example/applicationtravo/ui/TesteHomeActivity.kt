@@ -58,5 +58,13 @@ class TesteHomeActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnRecuperarSenha).setOnClickListener {
             startActivity(Intent(this, RecuperarSenhaActivity::class.java))
         }
+
+        findViewById<Button>(R.id.btnConfig).setOnClickListener {
+            startActivity(Intent(this, Configuracoes::class.java))
+        }
+
+
     }
+
+
 }

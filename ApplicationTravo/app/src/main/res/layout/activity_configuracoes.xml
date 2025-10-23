@@ -1,85 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF6FC">
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="24dp"
+    android:background="@color/colorBackground">
 
-    <!-- Toolbar -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
+    <!-- Título -->
+    <TextView
+        android:id="@+id/tvTitulo"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSurface"
-        app:title="Configurações"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:text="Configurações"
+        android:textColor="@color/colorSecondary"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp" />
 
-    <!-- Conteúdo rolável -->
-    <ScrollView
-        android:id="@+id/scroll"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintBottom_toTopOf="@id/bottomNav"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+    <!-- Botões -->
+    <Button
+        android:id="@+id/btnFavoritos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Favoritos"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_marginBottom="12dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+    <Button
+        android:id="@+id/btnListaCupons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lista de Cupons"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_marginBottom="12dp" />
 
-            <Button
-                android:id="@+id/btnNotificacao"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Notificações"
-                android:backgroundTint="@color/warning"
-                android:textColor="@color/black" />
+    <Button
+        android:id="@+id/btnListaServicos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lista de Serviços"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_marginBottom="12dp" />
 
-            <Button
-                android:id="@+id/btnAcessibilidade"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Acessibilidade"
-                android:backgroundTint="@color/warning"
-                android:textColor="@color/black" />
+    <Button
+        android:id="@+id/btnPerfil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Perfil"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_marginBottom="24dp" />
 
-            <Button
-                android:id="@+id/btnSuporte"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Suporte"
-                android:backgroundTint="@color/warning"
-                android:textColor="@color/black" />
-
-            <Button
-                android:id="@+id/btnInformacoes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Informações"
-                android:backgroundTint="@color/warning"
-                android:textColor="@color/black" />
-
-        </LinearLayout>
-    </ScrollView>
-
-    <!-- Bottom Navigation -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNav"
-        android:layout_width="0dp"
-        android:layout_height="72dp"
-        android:background="#FFD398"
-        app:menu="@menu/bottom_nav_menu"
-        app:itemIconTint="@color/selector_bottom_nav"
-        app:itemTextColor="@color/selector_bottom_nav"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Botão sair com destaque -->
+    <Button
+        android:id="@+id/btnSair"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sair"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/error"
+        android:layout_marginTop="16dp" />
+</LinearLayout>
