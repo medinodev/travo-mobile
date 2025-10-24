@@ -10,7 +10,9 @@ import coil.load
 import com.example.applicationtravo.R
 import com.example.applicationtravo.models.ServicoListagemResponse
 
-class ServicoAdapter : RecyclerView.Adapter<ServicoAdapter.VH>() {
+class ServicoAdapter(
+    private val onItemClick: (ServicoListagemResponse) -> Unit
+) : RecyclerView.Adapter<ServicoAdapter.VH>() {
 
     private var itens: List<ServicoListagemResponse> = emptyList()
 
@@ -27,7 +29,8 @@ class ServicoAdapter : RecyclerView.Adapter<ServicoAdapter.VH>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.item_favorito, parent, false)
+        val v = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_favorito, parent, false)
         return VH(v)
     }
 
@@ -42,6 +45,8 @@ class ServicoAdapter : RecyclerView.Adapter<ServicoAdapter.VH>() {
             error(android.R.drawable.ic_menu_report_image)
         }
 
+        // clique no item inteiro (pode trocar por um botão específico se quiser)
+        holder.itemView.setOnClickListener { onItemClick(item) }
     }
 
     override fun getItemCount(): Int = itens.size

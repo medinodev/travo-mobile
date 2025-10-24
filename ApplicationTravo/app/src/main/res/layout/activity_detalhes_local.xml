@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:background="#ECECEC"
     tools:context=".ui.detalhesLocal.DetalhesLocal">
+
     <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
@@ -20,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
     <!-- Conteúdo rolável -->
     <ScrollView
         android:id="@+id/scroll"
@@ -31,10 +33,12 @@
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <!-- HEADER -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -42,17 +46,20 @@
                 android:layout_marginBottom="12dp"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="2dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:padding="12dp">
+
                     <!-- Coluna de textos -->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/tvTitulo"
                             android:layout_width="match_parent"
@@ -61,6 +68,7 @@
                             android:textStyle="bold"
                             android:textColor="#1E1E1E"
                             android:textSize="20sp" />
+
                         <TextView
                             android:id="@+id/tvEndereco"
                             android:layout_width="match_parent"
@@ -71,15 +79,34 @@
                             android:textSize="13sp"
                             android:maxLines="1"
                             android:ellipsize="end" />
+
+                        <TextView
+                            android:id="@+id/tvTipo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Tipo: —"
+                            android:textColor="#6A6A6A"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tvCep"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="CEP: —"
+                            android:textColor="#6A6A6A"
+                            android:textSize="13sp" />
+
+
                         <TextView
                             android:id="@+id/tvHoje"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="Funcionamento hoje:  qui — 17:00–23:00"
+                            android:text="Funcionamento hoje: qui — 17:00–23:00"
                             android:textColor="#1E1E1E"
                             android:textSize="13sp" />
                     </LinearLayout>
+
                     <!-- Imagem da capa -->
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/imgCapa"
@@ -93,6 +120,7 @@
                         app:strokeWidth="1dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+
             <!-- RESUMO -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -100,17 +128,20 @@
                 android:layout_marginBottom="12dp"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="1dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="98dp"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="12dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Resumo do local"
                         android:textColor="#1E1E1E"
                         android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/tvResumo"
                         android:layout_width="match_parent"
@@ -120,61 +151,8 @@
                         android:textColor="#424242" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-            <!-- HORÁRIOS -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="73dp"
-                android:layout_marginBottom="12dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="1dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Horário de funcionamento:"
-                        android:textColor="#1E1E1E"
-                        android:textStyle="bold" />
-                    <!-- Linha de horário -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="segunda"
-                            android:textColor="#333333" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="17:00–23:00"
-                            android:textColor="#333333" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="terça"
-                            android:textColor="#333333" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="17:00–23:00"
-                            android:textColor="#333333" />
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+
+
             <!-- CUPONS -->
             <TextView
                 android:layout_width="wrap_content"
@@ -183,6 +161,7 @@
                 android:textStyle="bold"
                 android:textColor="#1E1E1E"
                 android:layout_marginBottom="6dp" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvCupons"
                 android:layout_width="match_parent"
@@ -192,6 +171,7 @@
                 android:paddingEnd="6dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_cupom" />
+
             <!-- AVALIAÇÕES -->
             <TextView
                 android:layout_width="wrap_content"
@@ -200,28 +180,33 @@
                 android:textStyle="bold"
                 android:textColor="#1E1E1E"
                 android:layout_marginBottom="6dp" />
+
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="1dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="12dp">
-                    <!-- Distribuição (exemplo 5 estrelas) -->
+
+                    <!-- Distribuição (exemplo ilustrativo) -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
                             android:text="5 estrelas"
                             android:textColor="#333333" />
+
                         <ProgressBar
                             style="?android:attr/progressBarStyleHorizontal"
                             android:layout_width="0dp"
@@ -230,6 +215,7 @@
                             android:backgroundTint="#E0E0E0"
                             android:progress="57"
                             android:progressTint="#4CAF50" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -237,40 +223,26 @@
                             android:text="57%"
                             android:textColor="#333333" />
                     </LinearLayout>
-                    <!-- Lista de reviews -->
-                    <!-- Três avaliações fixas -->
-                    <LinearLayout
+
+                    <!-- Lista de reviews dinâmica -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvReviews"
                         android:layout_width="match_parent"
-                        android:layout_height="239dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:orientation="vertical">
-                        <!-- 1º review (sem margem) -->
-                        <include
-                            layout="@layout/item_review"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-                        <!-- 2º review (com espaçamento em cima) -->
-                        <include
-                            layout="@layout/item_review"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp" />
-                        <!-- 3º review (com espaçamento em cima) -->
-                        <include
-                            layout="@layout/item_review"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp" />
-                    </LinearLayout>
+                        android:nestedScrollingEnabled="false"
+                        tools:listitem="@layout/item_review" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+
             <!-- Espaço final -->
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="16dp" />
         </LinearLayout>
     </ScrollView>
-    <!-- Bottom Navigation (usa seu menu/bottom_nav_menu) -->
+
+    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="0dp"
