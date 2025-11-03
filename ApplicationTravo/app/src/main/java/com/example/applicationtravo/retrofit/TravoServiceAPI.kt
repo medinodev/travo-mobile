@@ -20,10 +20,10 @@ import retrofit2.http.Query
 
 interface TravoServiceAPI {
 
-    @POST("usuariosOrg")
+    @POST("usuarios")
     suspend fun registrar(@Body registroRequest: RegistroRequest): Response<Unit>
 
-    @POST("usuariosOrg/login")
+    @POST("usuario/login")
     suspend fun login(@Body loginRequest: LoginRequest): Response<LoginResponse>
 
     @GET("usuarios")

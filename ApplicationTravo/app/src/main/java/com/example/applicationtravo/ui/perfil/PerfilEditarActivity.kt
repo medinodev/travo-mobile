@@ -67,7 +67,8 @@ class PerfilEditarActivity : AppCompatActivity() {
                             if (resp.isSuccessful) {
                                 val u = resp.body()
                                 if (u != null) {
-                                    editNome.setText(u.nomeUsuario.ifEmpty { u.nomeCompleto })
+                                    // Preencher com nome completo (obrigatório) ou nome de usuário (opcional)
+                                    editNome.setText(u.nomeCompleto.ifEmpty { u.nomeUsuario })
                                     editBio.setText(u.sobre ?: "")
                                     editTelefone.setText(u.telefone ?: "")
                                 }
@@ -109,14 +110,28 @@ class PerfilEditarActivity : AppCompatActivity() {
             }
 
             val api = RetrofitService.getTravoServiceAPIWithToken(token)
-            val request = UsuarioUpdateRequest(
-                nomeUsuario = nome,
-                sobre = bio,
-                telefone = telefone.ifEmpty { null }
-            )
-
+            
+            // Buscar dados atuais do usuário para mesclar com o update
+            // (necessário porque o backend exige todos os campos obrigatórios)
             CoroutineScope(Dispatchers.IO).launch {
                 try {
+                    val usuarioAtual = api.getUserById(userId)
+                    if (!usuarioAtual.isSuccessful || usuarioAtual.body() == null) {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(this@PerfilEditarActivity, "Erro ao buscar dados do usuário", Toast.LENGTH_SHORT).show()
+                        }
+                        return@launch
+                    }
+                    
+                    val u = usuarioAtual.body()!!
+                    val request = UsuarioUpdateRequest(
+                        email = u.email, // Manter email atual
+                        nomeCompleto = nome, // nomeCompleto é obrigatório
+                        nomeUsuario = if (nome != u.nomeCompleto) nome.takeIf { it.isNotEmpty() } else u.nomeUsuario,
+                        sobre = bio.ifEmpty { null },
+                        telefone = telefone.ifEmpty { null }
+                    )
+                    
                     val response = api.updateUser(userId, request)
                     withContext(Dispatchers.Main) {
                         if (response.isSuccessful) {
@@ -124,7 +139,18 @@ class PerfilEditarActivity : AppCompatActivity() {
                             finish()
                         } else {
                             val errorBody = response.errorBody()?.string()
-                            Toast.makeText(this@PerfilEditarActivity, "Erro ao salvar perfil: $errorBody", Toast.LENGTH_LONG).show()
+                            val errorMessage = try {
+                                val jsonObject = org.json.JSONObject(errorBody)
+                                if (jsonObject.has("errors")) {
+                                    val errorsArray = jsonObject.getJSONArray("errors")
+                                    errorsArray.getString(0)
+                                } else {
+                                    jsonObject.optString("error", "Erro ao salvar perfil")
+                                }
+                            } catch (e: Exception) {
+                                "Erro ao salvar perfil: ${errorBody ?: e.message}"
+                            }
+                            Toast.makeText(this@PerfilEditarActivity, errorMessage, Toast.LENGTH_LONG).show()
                         }
                     }
                 } catch (e: Exception) {
@@ -133,6 +159,7 @@ class PerfilEditarActivity : AppCompatActivity() {
                     }
                 }
             }
+
         }
 
         // Listener - salvar senha
