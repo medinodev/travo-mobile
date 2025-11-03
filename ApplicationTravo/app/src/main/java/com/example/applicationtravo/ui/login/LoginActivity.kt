@@ -19,6 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
 
@@ -95,13 +96,22 @@ class LoginActivity : AppCompatActivity() {
                                 finish()
                             }
                         } else {
+                            val errorBody = response.errorBody()?.string()
+                            val errorMessage = try {
+                                val jsonObject = org.json.JSONObject(errorBody)
+                                jsonObject.optString("mensagem", "Erro ao fazer login. Verifique suas credenciais.")
+                            } catch (e: Exception) {
+                                "Erro ao fazer login. Verifique suas credenciais."
+                            }
+                            
                             withContext(Dispatchers.Main) {
                                 Toast.makeText(
                                     this@LoginActivity,
-                                    "Erro ao fazer login. Verifique suas credenciais.",
+                                    errorMessage,
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
+                            println("DEBUG: Erro no login: $errorBody")
                         }
                     } catch (e: Exception) {
                         println("DEBUG: Erro no login: ${e.message}")

@@ -25,12 +25,12 @@
         android:layout_gravity="center"
         android:layout_marginBottom="24dp"/>
 
-    <!-- Nome -->
+    <!-- Nome Completo -->
     <EditText
         android:id="@+id/editNomeFantasia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Digite seu nome ..."
+        android:hint="Digite seu nome completo"
         android:background="@android:drawable/edit_text"
         android:layout_marginBottom="12dp"/>
 
@@ -39,20 +39,20 @@
         android:id="@+id/editEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Digite seu e-mail ..."
+        android:hint="Digite seu e-mail"
         android:inputType="textEmailAddress"
         android:background="@android:drawable/edit_text"
         android:layout_marginBottom="12dp"/>
 
-    <!-- Senha -->
+    <!-- Telefone (Opcional) -->
     <EditText
         android:id="@+id/editTelefone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="12dp"
         android:background="@android:drawable/edit_text"
-        android:hint="Digite seu telefone"
-        android:inputType="date" />
+        android:hint="Digite seu telefone (opcional)"
+        android:inputType="phone" />
 
     <EditText
         android:id="@+id/editSenha"
