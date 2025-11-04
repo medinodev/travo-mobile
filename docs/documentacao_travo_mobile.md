@@ -83,6 +83,14 @@ A interface também oferece a opção **“Voltar para Login”**, facilitando o
 
 ![Figura 3 - Tela de Recuperação de Senha](/imagens-travo/tela_recuperarSenha_travo.png)
 
+### Figura 4: Tela de Configurações  
+**Legenda:** A tela de configurações centraliza as principais opções de navegação e personalização do usuário no TRAVO Mobile.  
+Por meio desta interface, o usuário pode acessar suas listas de **Favoritos**, **Cupons** e **Serviços**, além de visualizar ou editar informações do **Perfil**.  
+O botão **Sair**, destacado em vermelho, encerra a sessão atual e redireciona o usuário para a tela de login.  
+
+![Figura 4 - Tela de Configurações](/imagens-travo/tela_configuracao_travo.png)
+
+
 
 
 
