@@ -90,6 +90,34 @@ O botão **Sair**, destacado em vermelho, encerra a sessão atual e redireciona 
 
 ![Figura 4 - Tela de Configurações](/imagens-travo/tela_configuracao_travo.png)
 
+### Figura 5: Tela de Detalhe do Local  
+**Legenda:** A tela de detalhe do local apresenta informações completas sobre um estabelecimento específico no TRAVO Mobile.  
+Exibe dados como **nome**, **endereço**, **tipo**, **horário de funcionamento** e um **resumo descritivo** do local.  
+Além disso, disponibiliza **cupons de desconto** ativos e uma seção de **avaliações de usuários**, que inclui comentários, notas e percentuais de satisfação.  
+A navegação inferior permite alternar rapidamente entre as seções **Descontos**, **Home** e **Configurações**, garantindo uma experiência fluida dentro do aplicativo.  
+
+![Figura 5 - Tela de Detalhe do Local](/imagens-travo/tela_detalhesLocal_travo.png)
+
+### Figura 6: Tela de Favoritos 
+**Legenda:** A tela de favoritos apresenta informações completas sobre um estabelecimento específico que o usuário marcou como favorito.  
+A navegação inferior permite alternar rapidamente entre as seções **Descontos**, **Home** e **Configurações**, garantindo uma experiência fluida dentro do aplicativo.
+
+![Figura 6 - Tela de Favoritos](/imagens-travo/tela_favoritos_travo.png)
+
+### Figura 7: Tela de Listagem de serviços
+**Legenda:** A tela de listagem de serviços permite que o usuário veja de forma rápida e em forma de listagem os estabelecimentos que estão cadastrados no app. 
+A navegação inferior permite alternar rapidamente entre as seções **Descontos**, **Home** e **Configurações**, garantindo uma experiência fluida dentro do aplicativo. 
+
+![Figura 7 - Tela de Listagem de Serviços](/imagens-travo/tela_listagemLocais_travo.png) 
+
+### Figura 8: Tela de Listagem de Cupons
+**Legenda:** A tela de listagem de cupons apresenta os cupons que estão disponíveis para os usuários e a quais estabacimentos cadastrados no app os cupons se referem.  
+
+![Figura 8 - Tela de Listagem de Serviços](/imagens-travo/tela_favoritos_travo.png) **Imagem pendente
+
+
+
+
 
 
 
