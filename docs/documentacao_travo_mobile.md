@@ -115,6 +115,25 @@ A navegação inferior permite alternar rapidamente entre as seções **Desconto
 
 ![Figura 8 - Tela de Listagem de Serviços](/imagens-travo/tela_favoritos_travo.png) **Imagem pendente
 
+### Figura 9: Tela de Perfil do Usuário  
+**Legenda:** A tela de perfil do usuário exibe as principais informações pessoais cadastradas no TRAVO Mobile.  
+Apresenta **foto do usuário**, **nome**, **biografia curta** e **e-mail**. Também são mostrados dados complementares como **data de nascimento** e **telefone**.  
+O botão **Editar** permite que o usuário acesse a tela de edição de perfil para atualizar seus dados.  
+Na parte inferior, há uma lista de **locais visitados**, representada por miniaturas e nomes dos locais, reforçando a interação do usuário com o aplicativo.  
+A **barra de navegação inferior** possibilita o acesso rápido às seções **Descontos**, **Home** e **Configurações**, mantendo a consistência visual entre as telas do aplicativo.  
+
+![Figura 6 - Tela de Perfil do Usuário](/imagens-travo/tela_perfil_travo.png)
+
+---
+
+### Figura 7: Tela de Edição de Perfil  
+**Legenda:** A tela de edição de perfil oferece ao usuário a possibilidade de atualizar suas informações pessoais de forma simples e intuitiva.  
+Contém campos para **nome**, **bio** e **telefone**, além de permitir a **alteração da foto de perfil**.  
+O botão **Salvar** garante que as mudanças realizadas sejam registradas.  
+A seção “**Alterar senha**” possibilita redefinir a senha, exigindo o preenchimento da **senha antiga**, **nova senha** e **confirmação da nova senha**, reforçando a segurança dos dados.  
+O design segue o padrão visual do TRAVO, com **botões arredondados em laranja**, **fundo rosado** e layout limpo, priorizando a experiência do usuário.  
+
+![Figura 7 - Tela de Edição de Perfil](/imagens-travo/tela_editarPerfil_travo.png)
 
 
 
