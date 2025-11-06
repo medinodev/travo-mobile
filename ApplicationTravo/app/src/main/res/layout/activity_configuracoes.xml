@@ -1,72 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="24dp"
     android:background="@color/colorBackground">
 
-    <!-- Título -->
-    <TextView
-        android:id="@+id/tvTitulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Configurações"
-        android:textColor="@color/colorSecondary"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="32dp" />
-
-    <!-- Botões -->
-    <Button
-        android:id="@+id/btnFavoritos"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Favoritos"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/colorPrimary"
-        android:layout_marginBottom="12dp" />
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
+        android:padding="24dp">
 
-    <Button
-        android:id="@+id/btnListaCupons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Lista de Cupons"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/colorPrimary"
-        android:layout_marginBottom="12dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
-    <Button
-        android:id="@+id/btnListaServicos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Lista de Serviços"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/colorPrimary"
-        android:layout_marginBottom="12dp" />
+            <TextView
+                android:id="@+id/tvTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Configurações"
+                android:textColor="@color/colorSecondary"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="32dp" />
 
-    <Button
-        android:id="@+id/btnPerfil"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Perfil"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/colorPrimary"
-        android:layout_marginBottom="24dp" />
+            <Button
+                android:id="@+id/btnFavoritos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Favoritos"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_marginBottom="12dp" />
 
-    <!-- Botão sair com destaque -->
-    <Button
-        android:id="@+id/btnSair"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sair"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/error"
-        android:layout_marginTop="16dp" />
-</LinearLayout>
+            <Button
+                android:id="@+id/btnListaCupons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lista de Cupons"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_marginBottom="12dp" />
+
+            <Button
+                android:id="@+id/btnListaServicos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lista de Serviços"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_marginBottom="12dp" />
+
+            <Button
+                android:id="@+id/btnPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Perfil"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_marginBottom="24dp" />
+
+            <Button
+                android:id="@+id/btnSair"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sair"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/error"
+                android:layout_marginTop="16dp" />
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- MENU FIXO NO RODAPÉ -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="416dp"
+        android:layout_height="87dp"
+        android:background="@color/colorPrimary"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:menu="@menu/bottom_nav_menu" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

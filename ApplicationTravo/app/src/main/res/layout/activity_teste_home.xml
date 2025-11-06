@@ -1,83 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
+    android:background="@color/colorBackground"
     tools:context=".ui.TesteHomeActivity">
 
-    <LinearLayout
+    <!-- Conteúdo rolável -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:spacing="12dp">
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNav"
+        android:padding="24dp">
 
-        <Button
-            android:id="@+id/btnCadastro"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CadastroActivity" />
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:spacing="12dp">
 
-        <Button
-            android:id="@+id/btnDetalhesLocal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="DetalhesLocal" />
+            <Button
+                android:id="@+id/btnCadastro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CadastroActivity" />
 
-        <Button
-            android:id="@+id/btnFavoritos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Favoritos" />
+            <Button
+                android:id="@+id/btnDetalhesLocal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DetalhesLocal" />
 
-        <Button
-            android:id="@+id/btnListaCupons"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ListaCupons" />
+            <Button
+                android:id="@+id/btnFavoritos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Favoritos" />
 
-        <Button
-            android:id="@+id/btnListaServicos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ListaServicos" />
+            <Button
+                android:id="@+id/btnListaCupons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ListaCupons" />
 
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="LoginActivity" />
+            <Button
+                android:id="@+id/btnListaServicos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ListaServicos" />
 
-        <Button
-            android:id="@+id/btnEditarPerfil"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="EditarPerfilActivity" />
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LoginActivity" />
 
-        <Button
-            android:id="@+id/btnPerfil"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="PerfilActivity" />
+            <Button
+                android:id="@+id/btnEditarPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="EditarPerfilActivity" />
 
-        <Button
-            android:id="@+id/btnPerfilEditar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="PerfilEditarActivity" />
+            <Button
+                android:id="@+id/btnPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PerfilActivity" />
 
-        <Button
-            android:id="@+id/btnRecuperarSenha"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="RecuperarSenhaActivity" />
+            <Button
+                android:id="@+id/btnPerfilEditar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PerfilEditarActivity" />
 
-        <Button
-            android:id="@+id/btnConfig"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Configuracoes" />
+            <Button
+                android:id="@+id/btnRecuperarSenha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="RecuperarSenhaActivity" />
 
-    </LinearLayout>
-</ScrollView>
+            <Button
+                android:id="@+id/btnConfig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Configurações" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Menu Inferior fixo -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="92dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:menu="@menu/bottom_nav_menu" />
+
+</RelativeLayout>

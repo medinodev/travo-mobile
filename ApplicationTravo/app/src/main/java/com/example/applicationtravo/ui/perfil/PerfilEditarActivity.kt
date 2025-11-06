@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.applicationtravo.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import android.content.Context
+import android.content.Intent
 import com.example.applicationtravo.retrofit.RetrofitService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +19,9 @@ import android.util.Base64
 import org.json.JSONObject
 import com.example.applicationtravo.models.UsuarioUpdateRequest
 import com.example.applicationtravo.models.ChangePasswordRequest
+import com.example.applicationtravo.ui.TesteHomeActivity
+import com.example.applicationtravo.ui.configuracoes.Configuracoes
+import com.example.applicationtravo.ui.listaCupons.ListaCupons
 
 class PerfilEditarActivity : AppCompatActivity() {
 
@@ -38,6 +42,7 @@ class PerfilEditarActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil_editar)
+
 
         // Referências
         imgFoto = findViewById(R.id.imgFotoUsuarioEditar)
@@ -220,6 +225,28 @@ class PerfilEditarActivity : AppCompatActivity() {
                         Toast.makeText(this@PerfilEditarActivity, "Falha: ${e.message}", Toast.LENGTH_LONG).show()
                     }
                 }
+            }
+        }
+
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+
+                R.id.nav_descontos -> {
+                    startActivity(Intent(this, ListaCupons::class.java))
+                    true
+                }
+
+                R.id.nav_home -> {
+                    startActivity(Intent(this, TesteHomeActivity::class.java))
+                    true
+                }
+
+                R.id.nav_config -> {
+                    startActivity(Intent(this, Configuracoes::class.java))
+                    true
+                }
+
+                else -> false
             }
         }
     }

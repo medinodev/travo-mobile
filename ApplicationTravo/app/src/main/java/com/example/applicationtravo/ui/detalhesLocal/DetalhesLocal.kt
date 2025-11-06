@@ -1,5 +1,6 @@
 package com.example.applicationtravo.ui.detalhesLocal
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
@@ -13,7 +14,11 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.applicationtravo.R
 import com.example.applicationtravo.retrofit.RetrofitService
+import com.example.applicationtravo.ui.TesteHomeActivity
+import com.example.applicationtravo.ui.configuracoes.Configuracoes
+import com.example.applicationtravo.ui.listaCupons.ListaCupons
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -48,6 +53,8 @@ class DetalhesLocal : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_detalhes_local)
 
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -69,6 +76,28 @@ class DetalhesLocal : AppCompatActivity() {
         carregarDetalhes(servicoId)
         carregarCupons(servicoId)
         carregarAvaliacoes(servicoId)
+
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+
+                R.id.nav_descontos -> {
+                    startActivity(Intent(this, ListaCupons::class.java))
+                    true
+                }
+
+                R.id.nav_home -> {
+                    startActivity(Intent(this, TesteHomeActivity::class.java))
+                    true
+                }
+
+                R.id.nav_config -> {
+                    startActivity(Intent(this, Configuracoes::class.java))
+                    true
+                }
+
+                else -> false
+            }
+        }
     }
 
     private fun bindViews() {

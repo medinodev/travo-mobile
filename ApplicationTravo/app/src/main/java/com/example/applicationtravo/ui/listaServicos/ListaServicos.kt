@@ -1,6 +1,7 @@
 package com.example.applicationtravo.ui.listaServicos
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
@@ -10,6 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.applicationtravo.R
 import com.example.applicationtravo.retrofit.RetrofitService
+import com.example.applicationtravo.ui.TesteHomeActivity
+import com.example.applicationtravo.ui.configuracoes.Configuracoes
+import com.example.applicationtravo.ui.listaCupons.ListaCupons
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,6 +30,9 @@ class ListaServicos : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_servicos)
+
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
+
 
         recycler = findViewById(R.id.recycler_servicos)
         cardFiltros = findViewById(R.id.cardFiltros)
@@ -88,5 +96,28 @@ class ListaServicos : AppCompatActivity() {
                 }
             }
         }
+
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+
+                R.id.nav_descontos -> {
+                    startActivity(Intent(this, ListaCupons::class.java))
+                    true
+                }
+
+                R.id.nav_home -> {
+                    startActivity(Intent(this, TesteHomeActivity::class.java))
+                    true
+                }
+
+                R.id.nav_config -> {
+                    startActivity(Intent(this, Configuracoes::class.java))
+                    true
+                }
+
+                else -> false
+            }
+        }
+
     }
 }
