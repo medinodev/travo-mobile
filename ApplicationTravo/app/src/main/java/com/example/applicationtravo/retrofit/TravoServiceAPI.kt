@@ -47,6 +47,8 @@ interface TravoServiceAPI {
     ): Response<LocalDetalheResponse>
 
     // CUPONS
+    @GET("cuponsall")
+    suspend fun listarTodosCupons(): Response<List<CupomResponse>>
     // filtrar por serviço:
     @GET("cupons")
     suspend fun listarCuponsDoServico(
