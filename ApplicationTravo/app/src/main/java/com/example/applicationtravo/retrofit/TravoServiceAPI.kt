@@ -9,6 +9,7 @@ import com.example.applicationtravo.models.ReviewResponse
 import com.example.applicationtravo.models.ServicoListagemResponse
 import com.example.applicationtravo.models.UsuariosResponse
 import com.example.applicationtravo.models.ChangePasswordRequest
+import com.example.applicationtravo.models.FavoriteResponse
 
 import retrofit2.Response
 import retrofit2.http.Body
@@ -66,5 +67,8 @@ interface TravoServiceAPI {
     suspend fun listarAvaliacoesDoServico(
         @Query("servicoId") idServico: Int? = null
     ): Response<List<ReviewResponse>>
+
+    @GET(value = "favoritos")
+    suspend fun getAllFavoritos(): Response<List<FavoriteResponse>>
 
 }
