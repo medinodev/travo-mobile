@@ -11,6 +11,21 @@ data class ServicoListagemResponse(
     @SerializedName("endereco")
     val endereco: String?,
 
+    @SerializedName("tipo")
+    val tipo: String?,
+
+    @SerializedName("lat")
+    val lat: Double?,
+
+    @SerializedName("lng")
+    val lng: Double?,
+
     @SerializedName("imagem_capa_url")
-    val imagemCapaUrl: String?
+    val imagemCapaUrl: String?,
+
+    @SerializedName("media_avaliacao")
+    val mediaAvaliacao: Double?,
+
+    @SerializedName("total_avaliacoes")
+    val totalAvaliacoes: Int?
 )
