@@ -1,159 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="24dp"
     android:background="@color/colorBackground"
     tools:context=".ui.perfil.PerfilActivity">
 
-    <!-- Logo -->
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/logoFragment"
-        android:name="com.example.applicationtravo.ui.components.LogoFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp" />
-
-    <!-- Bloco: foto + nome + bio -->
-    <LinearLayout
+    <!-- Conteúdo rolável -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-
-        <ImageView
-            android:id="@+id/imgFotoUsuario"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/ic_launcher_foreground"
-            android:scaleType="centerCrop"
-            android:background="@drawable/circle_bg"
-            android:contentDescription="Foto do usuário" />
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNav">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_marginStart="12dp">
+            android:padding="24dp"
+            android:gravity="center_horizontal">
 
-            <TextView
-                android:id="@+id/tvNomeUsuario"
+            <!-- Logo -->
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/logoFragment"
+                android:name="com.example.applicationtravo.ui.components.LogoFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="João Novais"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/colorSecondary" />
+                android:layout_marginBottom="24dp" />
 
-            <TextView
-                android:id="@+id/tvBioUsuario"
-                android:layout_width="wrap_content"
+            <!-- Bloco foto + nome + bio -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Explorador de coração, sempre em busca de novos destinos."
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/imgFotoUsuario"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/ic_launcher_foreground"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/circle_bg"
+                    android:contentDescription="Foto do usuário" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp">
+
+                    <TextView
+                        android:id="@+id/tvNomeUsuario"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="João Novais"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorSecondary" />
+
+                    <TextView
+                        android:id="@+id/tvBioUsuario"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Explorador de coração, sempre em busca de novos destinos."
+                        android:textSize="14sp"
+                        android:textColor="@color/grayDark"
+                        android:maxLines="2" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- E-mail -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="E-mail"
                 android:textSize="14sp"
-                android:textColor="@color/grayDark"
-                android:maxLines="2" />
+                android:textColor="@color/colorSecondary"
+                android:layout_marginTop="24dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tvEmailUsuario"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="carlosnovais@gmail.com"
+                    android:textColor="@color/black" />
+
+                <Button
+                    android:id="@+id/btnEditarPerfil"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Editar"
+                    android:textSize="12sp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:backgroundTint="@color/orange"
+                    android:textColor="@android:color/white"/>
+            </LinearLayout>
+
+            <!-- Data de Nascimento -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Data de Nascimento"
+                android:textSize="14sp"
+                android:textColor="@color/colorSecondary"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:id="@+id/tvNascimentoUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="10/10/1990"
+                android:textColor="@color/black" />
+
+            <!-- Telefone -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Telefone"
+                android:textSize="14sp"
+                android:textColor="@color/colorSecondary"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:id="@+id/tvTelefoneUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="(11) 99999-9999"
+                android:textColor="@color/black" />
+
+            <!-- Locais Visitados -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Locais Visitados →"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/colorSecondary"
+                android:layout_marginTop="24dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvLocaisVisitados"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_local_visitado" />
+
         </LinearLayout>
-    </LinearLayout>
 
-    <!-- E-mail -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="E-mail"
-        android:textSize="14sp"
-        android:textColor="@color/colorSecondary"
-        android:layout_marginTop="24dp" />
+    </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/tvEmailUsuario"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="carlosnovais@gmail.com"
-            android:textColor="@color/black" />
-
-        <!-- Botão Editar Perfil -->
-        <Button
-            android:id="@+id/btnEditarPerfil"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Editar"
-            android:textSize="12sp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:backgroundTint="@color/orange"
-            android:textColor="@android:color/white"/>
-    </LinearLayout>
-
-    <!-- Data de Nascimento -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Data de Nascimento"
-        android:textSize="14sp"
-        android:textColor="@color/colorSecondary"
-        android:layout_marginTop="16dp" />
-
-    <TextView
-        android:id="@+id/tvNascimentoUsuario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="10/10/1990"
-        android:textColor="@color/black" />
-
-    <!-- Telefone -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Telefone"
-        android:textSize="14sp"
-        android:textColor="@color/colorSecondary"
-        android:layout_marginTop="16dp" />
-
-    <TextView
-        android:id="@+id/tvTelefoneUsuario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="(11) 99999-9999"
-        android:textColor="@color/black" />
-
-    <!-- Locais Visitados -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Locais Visitados →"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:textColor="@color/colorSecondary"
-        android:layout_marginTop="24dp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvLocaisVisitados"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="8dp"
-        tools:listitem="@layout/item_local_visitado" />
-
-    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginTop="24dp"
-        app:menu="@menu/bottom_nav_menu"
-        android:background="@color/colorPrimary" />
+        android:layout_height="90dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:menu="@menu/bottom_nav_menu" />
 
-</LinearLayout>
+</RelativeLayout>

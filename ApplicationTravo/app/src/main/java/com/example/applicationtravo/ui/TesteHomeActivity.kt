@@ -16,6 +16,7 @@ import com.example.applicationtravo.ui.login.LoginActivity
 import com.example.applicationtravo.ui.perfil.PerfilActivity
 import com.example.applicationtravo.ui.perfil.PerfilEditarActivity
 import com.example.applicationtravo.ui.recuperarSenha.RecuperarSenhaActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class TesteHomeActivity : AppCompatActivity() {
 
@@ -23,6 +24,8 @@ class TesteHomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         println("DEBUG: TesteHomeActivity onCreate chamado")
         setContentView(R.layout.activity_teste_home)
+
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
 
         findViewById<Button>(R.id.btnCadastro).setOnClickListener {
             startActivity(Intent(this, CadastroActivity::class.java))
@@ -64,8 +67,31 @@ class TesteHomeActivity : AppCompatActivity() {
             startActivity(Intent(this, Configuracoes::class.java))
         }
 
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+
+                R.id.nav_descontos -> {
+                    startActivity(Intent(this, ListaCupons::class.java))
+                    true
+                }
+
+                R.id.nav_home -> {
+                    startActivity(Intent(this, TesteHomeActivity::class.java))
+                    true
+                }
+
+                R.id.nav_config -> {
+                    startActivity(Intent(this, Configuracoes::class.java))
+                    true
+                }
+
+                else -> false
+            }
+        }
 
     }
+
+
 
 
 }

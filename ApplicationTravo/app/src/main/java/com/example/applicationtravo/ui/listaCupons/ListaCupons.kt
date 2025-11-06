@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.applicationtravo.R
 import com.example.applicationtravo.models.CupomResponse
 import com.example.applicationtravo.retrofit.RetrofitService
+import com.example.applicationtravo.ui.TesteHomeActivity
 import com.example.applicationtravo.ui.configuracoes.Configuracoes
 import com.example.applicationtravo.ui.listaServicos.ListaServicos
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -30,6 +31,8 @@ class ListaCupons : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_cupons)
 
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
+
         recyclerView = findViewById(R.id.recycler_cupons)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -40,6 +43,28 @@ class ListaCupons : AppCompatActivity() {
 
         configurarBottomNavigation()
         configurarBusca()
+
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+
+                R.id.nav_descontos -> {
+                    startActivity(Intent(this, ListaCupons::class.java))
+                    true
+                }
+
+                R.id.nav_home -> {
+                    startActivity(Intent(this, TesteHomeActivity::class.java))
+                    true
+                }
+
+                R.id.nav_config -> {
+                    startActivity(Intent(this, Configuracoes::class.java))
+                    true
+                }
+
+                else -> false
+            }
+        }
     }
 
     private fun carregarCupons() {

@@ -17,6 +17,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import android.content.Context
 import android.util.Base64
+import com.example.applicationtravo.ui.TesteHomeActivity
+import com.example.applicationtravo.ui.configuracoes.Configuracoes
+import com.example.applicationtravo.ui.listaCupons.ListaCupons
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.json.JSONObject
 
 class PerfilActivity : AppCompatActivity() {
@@ -24,6 +28,8 @@ class PerfilActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_perfil)
+
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
 
         val btnEditarPerfil: Button = findViewById(R.id.btnEditarPerfil)
         val tvNomeUsuario: TextView = findViewById(R.id.tvNomeUsuario)
@@ -103,6 +109,28 @@ class PerfilActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@PerfilActivity, "Falha de conexão: ${e.message}", Toast.LENGTH_LONG).show()
                 }
+            }
+        }
+
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+
+                R.id.nav_descontos -> {
+                    startActivity(Intent(this, ListaCupons::class.java))
+                    true
+                }
+
+                R.id.nav_home -> {
+                    startActivity(Intent(this, TesteHomeActivity::class.java))
+                    true
+                }
+
+                R.id.nav_config -> {
+                    startActivity(Intent(this, Configuracoes::class.java))
+                    true
+                }
+
+                else -> false
             }
         }
     }

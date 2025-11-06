@@ -9,8 +9,8 @@ object RetrofitService {
     private var travoServiceAPIWithToken: TravoServiceAPI? = null
 
     // Constante para a URL base
-    private const val BASE_URL = "http://192.168.0.11:3000/rest/v1/" // Dispositivo físico
-    // private const val BASE_URL = "http://10.0.2.2:3000/rest/v1/" // Emulador
+    //private const val BASE_URL = "http://192.168.0.11:3000/rest/v1/" // Dispositivo físico
+    private const val BASE_URL = "http://10.0.2.2:3000/rest/v1/" // Emulador
 
     fun getTravoServiceAPI(): TravoServiceAPI {
         // Força recriação para evitar cache (útil durante desenvolvimento)
@@ -50,7 +50,7 @@ object RetrofitService {
             val retrofit = Retrofit.Builder()
                 //.baseUrl("http://192.168.0.245:3000/rest/v1/")
                 //.baseUrl("http://192.168.0.5:3000/rest/v1/")
-                .baseUrl("http://192.168.0.11:3000/rest/v1/")
+                .baseUrl("http://10.0.2.2:3000/rest/v1/")
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
