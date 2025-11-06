@@ -34,6 +34,11 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -51,4 +56,13 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation ("io.coil-kt:coil:2.7.0")
+
+    // ✅ Glide (bumptech)
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // ✅ OSMDroid (OpenStreetMap)
+    implementation("org.osmdroid:osmdroid-android:6.1.18")
+
+    // ✅ Coil (já estava, pode manter)
+    implementation("io.coil-kt:coil:2.7.0")
 }
