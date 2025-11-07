@@ -67,6 +67,9 @@
         <activity
             android:name=".ui.perfil.PerfilEditarActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.TesteHomeActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

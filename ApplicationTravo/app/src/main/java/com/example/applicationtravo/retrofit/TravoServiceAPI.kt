@@ -57,7 +57,9 @@ interface TravoServiceAPI {
     // CUPONS
     @GET("cuponsall")
     suspend fun listarTodosCupons(): Response<List<CupomResponse>>
+
     // filtrar por serviço:
+
     @GET("cupons")
     suspend fun listarCuponsDoServico(
         @Query("servicoId") idServico: Int? = null
