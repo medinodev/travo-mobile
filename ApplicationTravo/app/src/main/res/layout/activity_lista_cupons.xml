@@ -68,37 +68,11 @@
             android:gravity="center_vertical">
 
             <Button
+                android:id="@+id/btn_favoritos"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="Perto de mim"
-                android:textColor="#333"
-                android:backgroundTint="#FFF" />
-
-            <Button
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:text="Favoritos"
-                android:textColor="#333"
-                android:backgroundTint="#FFF" />
-
-            <Button
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="Restaurantes"
-                android:textColor="#333"
-                android:backgroundTint="#FFF" />
-
-            <Button
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cinemas"
                 android:textColor="#333"
                 android:backgroundTint="#FFF" />
         </LinearLayout>
