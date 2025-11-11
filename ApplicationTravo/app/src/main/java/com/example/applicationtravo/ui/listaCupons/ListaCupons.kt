@@ -79,7 +79,7 @@ class ListaCupons : AppCompatActivity() {
                 }
 
                 val response = RetrofitService.getTravoServiceAPIWithToken(token)
-                    .listarCuponsDoServico()
+                    .listarTodosCupons()
 
                 if (response.isSuccessful && response.body() != null) {
                     val lista = response.body()!!
