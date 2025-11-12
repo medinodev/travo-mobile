@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
@@ -40,7 +41,7 @@ class ListaCupons : AppCompatActivity() {
         clearButton = findViewById(R.id.btn_clear)
 
         carregarCupons()
-
+        configurarFiltros()
         configurarBottomNavigation()
         configurarBusca()
 
@@ -134,4 +135,13 @@ class ListaCupons : AppCompatActivity() {
             }
         }
     }
+    private fun configurarFiltros() {
+        val btnFavoritos = findViewById<Button>(R.id.btn_favoritos)
+        btnFavoritos.setOnClickListener {
+            if (::adapter.isInitialized) {
+                adapter.mostrarFavoritos()
+            }
+        }
+    }
+
 }
