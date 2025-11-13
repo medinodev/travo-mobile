@@ -18,14 +18,14 @@ object RetrofitService {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(LoggingInterceptor()) // Adiciona logging de todas as requisições
             .build()
-        
+
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         return retrofit.create(TravoServiceAPI::class.java)
-        
+
         // Versão com cache (descomente em produção):
         /*
         if(travoServiceAPI == null){
@@ -50,7 +50,7 @@ object RetrofitService {
             val retrofit = Retrofit.Builder()
                 //.baseUrl("http://192.168.0.245:3000/rest/v1/")
                 //.baseUrl("http://192.168.0.5:3000/rest/v1/")
-                .baseUrl("http://10.0.2.2:3000/rest/v1/")
+                .baseUrl(BASE_URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

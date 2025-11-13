@@ -10,6 +10,7 @@ import com.example.applicationtravo.ui.cadastro.CadastroActivity
 import com.example.applicationtravo.ui.configuracoes.Configuracoes
 import com.example.applicationtravo.ui.detalhesLocal.DetalhesLocal
 import com.example.applicationtravo.ui.favoritos.Favoritos
+import com.example.applicationtravo.ui.home.HomeActivity
 import com.example.applicationtravo.ui.listaCupons.ListaCupons
 import com.example.applicationtravo.ui.listaServicos.ListaServicos
 import com.example.applicationtravo.ui.login.LoginActivity
@@ -26,6 +27,10 @@ class TesteHomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_teste_home)
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
+
+        findViewById<Button>(R.id.btnHome).setOnClickListener {
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
 
         findViewById<Button>(R.id.btnCadastro).setOnClickListener {
             startActivity(Intent(this, CadastroActivity::class.java))
@@ -88,10 +93,5 @@ class TesteHomeActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
     }
-
-
-
-
 }

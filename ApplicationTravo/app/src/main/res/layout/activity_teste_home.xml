@@ -22,6 +22,12 @@
             android:spacing="12dp">
 
             <Button
+                android:id="@+id/btnHome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="HomeActivity" />
+
+            <Button
                 android:id="@+id/btnCadastro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
