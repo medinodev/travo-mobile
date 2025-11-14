@@ -1,15 +1,12 @@
 package com.example.applicationtravo.ui.home
 
-import android.os.Bundle
+import android.content.Context
 import android.content.Intent
 import android.graphics.Paint
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.core.content.ContextCompat
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
@@ -17,26 +14,27 @@ import com.example.applicationtravo.R
 import com.example.applicationtravo.databinding.ActivityHomeBinding
 import com.example.applicationtravo.models.ServicoListagemResponse
 import com.example.applicationtravo.retrofit.RetrofitService
+import com.example.applicationtravo.ui.detalhesLocal.DetalhesLocal
+import com.example.applicationtravo.ui.listaCupons.ListaCupons
+import com.example.applicationtravo.ui.configuracoes.Configuracoes
+import com.example.applicationtravo.ui.TesteHomeActivity
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.osmdroid.api.IMapController
-import org.osmdroid.config.Configuration
-import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.Marker
-import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
-import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
-import com.example.applicationtravo.ui.listaServicos.ListaServicos
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var binding: ActivityHomeBinding
-    private lateinit var mMap: MapView
-    private lateinit var controller: IMapController
-    private lateinit var mMyLocationOverlay: MyLocationNewOverlay
-
+    private lateinit var mapView: MapView
+    private var googleMap: GoogleMap? = null
     private var allServices = listOf<ServicoListagemResponse>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,27 +42,72 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupMap()
+        mapView = binding.mapView
+        mapView.onCreate(savedInstanceState)
+        mapView.getMapAsync(this)
+
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_descontos -> {
+                    startActivity(Intent(this, ListaCupons::class.java))
+                    true
+                }
+                R.id.nav_teste_home -> {
+                    startActivity(Intent(this, TesteHomeActivity::class.java))
+                    true
+                }
+                R.id.nav_config -> {
+                    startActivity(Intent(this, Configuracoes::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
+
         setupFilters()
         fetchServices()
         setupLinkToListaServicos()
+        setupSearchBar()
     }
 
-    private fun setupMap() {
-        Configuration.getInstance().load(
-            applicationContext,
-            getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
-        )
+    override fun onMapReady(gMap: GoogleMap) {
+        googleMap = gMap
+        googleMap?.uiSettings?.isZoomControlsEnabled = true
 
-        mMap = binding.osmmap
-        mMap.setMultiTouchControls(true)
-        controller = mMap.controller
-        controller.setZoom(13.0)
-        controller.setCenter(GeoPoint(-3.71722, -38.54306))
+        val fortaleza = LatLng(-3.71722, -38.54306)
+        googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(fortaleza, 13f))
 
-        mMyLocationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(this), mMap)
-        mMyLocationOverlay.enableMyLocation()
-        mMap.overlays.add(mMyLocationOverlay)
+        googleMap?.setInfoWindowAdapter(object : GoogleMap.InfoWindowAdapter {
+            override fun getInfoWindow(marker: com.google.android.gms.maps.model.Marker): android.view.View? = null
+            override fun getInfoContents(marker: com.google.android.gms.maps.model.Marker): android.view.View {
+                val view = layoutInflater.inflate(R.layout.custom_info_window, null)
+                val imageView = view.findViewById<ImageView>(R.id.infoImage)
+                val titleView = view.findViewById<TextView>(R.id.infoTitle)
+                val addressView = view.findViewById<TextView>(R.id.infoAddress)
+
+                val tag = marker.tag as? ServicoListagemResponse
+                titleView.text = tag?.nome ?: "Sem nome"
+                addressView.text = tag?.endereco ?: "Endereço não informado"
+
+                Glide.with(this@HomeActivity)
+                    .load(tag?.imagemCapaUrl)
+                    .into(imageView)
+
+                return view
+            }
+        })
+
+        googleMap?.setOnInfoWindowClickListener { marker ->
+            val servico = marker.tag as? ServicoListagemResponse
+            servico?.let {
+                val intent = Intent(this@HomeActivity, DetalhesLocal::class.java)
+                intent.putExtra("SERVICO_ID", it.id)
+                startActivity(intent)
+            }
+        }
+
+        updateCardsAndMap("Todos")
     }
 
     private fun setupFilters() {
@@ -84,94 +127,63 @@ class HomeActivity : AppCompatActivity() {
             val chip = chipGroup.findViewById<Chip>(checkedId)
             val selected = chip?.text?.toString() ?: "Todos"
             updateCardsAndMap(selected)
+
+            // Recentrar o mapa em Fortaleza sempre que o filtro mudar
+            val fortaleza = LatLng(-3.71722, -38.54306)
+            googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(fortaleza, 13f))
         }
     }
 
     private fun fetchServices() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                val api = RetrofitService.getTravoServiceAPI()
+                val sharedPref = getSharedPreferences("TravoApp", Context.MODE_PRIVATE)
+                val token = sharedPref.getString("token", null)
+
+                val api = if (!token.isNullOrEmpty())
+                    RetrofitService.getTravoServiceAPIWithToken(token)
+                else
+                    RetrofitService.getTravoServiceAPI()
 
                 val response = api.listarServicos()
 
                 if (response.isSuccessful) {
-                    val services = response.body() ?: emptyList()
-                    allServices = if (services.isNotEmpty()) services else getMockedServices()
-
-                    withContext(Dispatchers.Main) {
-                        updateCardsAndMap("Todos")
-                    }
+                    allServices = response.body() ?: emptyList()
+                    Log.d("HomeActivity", "Serviços carregados: ${allServices.size}")
                 } else {
                     Log.e("HomeActivity", "Erro listarServicos(): ${response.code()}")
-                    allServices = getMockedServices()
-                    withContext(Dispatchers.Main) {
-                        updateCardsAndMap("Todos")
-                    }
+                    allServices = emptyList()
                 }
+
+                withContext(Dispatchers.Main) { updateCardsAndMap("Todos") }
+
             } catch (e: Exception) {
                 Log.e("HomeActivity", "Erro ao buscar serviços: ${e.message}")
-                allServices = getMockedServices()
-                withContext(Dispatchers.Main) {
-                    updateCardsAndMap("Todos")
-                }
+                allServices = emptyList()
+                withContext(Dispatchers.Main) { updateCardsAndMap("Todos") }
             }
         }
-    }
-
-    private fun getMockedServices(): List<ServicoListagemResponse> {
-        Log.w("HomeActivity", "Usando dados mocados (sem conexão ou erro do backend).")
-
-        return listOf(
-            ServicoListagemResponse(
-                id = 1,
-                nome = "Bulls",
-                endereco = "R. Cel. Jucá, 700",
-                tipo = "restaurant",
-                lat = -3.7378847,
-                lng = -38.4913999,
-                imagemCapaUrl = "https://ozgnuchcsmoedkyhrqip.supabase.co/storage/v1/object/public/travo/servicos/perfil/bulls_aldeota_perfil.jpg",
-                mediaAvaliacao = 4.8,
-                totalAvaliacoes = 945
-            ),
-            ServicoListagemResponse(
-                id = 2,
-                nome = "Barney’s Burguer",
-                endereco = "R. Monsenhor Otávio de Castro, 901",
-                tipo = "restaurant",
-                lat = -3.7507870,
-                lng = -38.5263363,
-                imagemCapaUrl = "https://ozgnuchcsmoedkyhrqip.supabase.co/storage/v1/object/public/travo/servicos/perfil/barneys_burguer_perfil.jpg",
-                mediaAvaliacao = 4.9,
-                totalAvaliacoes = 346
-            ),
-            ServicoListagemResponse(
-                id = 3,
-                nome = "Pizza Hut",
-                endereco = "Av. Beira Mar, 2500",
-                tipo = "restaurant",
-                lat = -3.7241545,
-                lng = -38.5027959,
-                imagemCapaUrl = "https://ozgnuchcsmoedkyhrqip.supabase.co/storage/v1/object/public/travo/servicos/perfil/pizza_hut_perfil.jpg",
-                mediaAvaliacao = 4.3,
-                totalAvaliacoes = 535
-            )
-        )
     }
 
     private fun updateCardsAndMap(selectedType: String) {
         val container = binding.cardContainer
         container.removeAllViews()
+        googleMap?.clear()
 
-        // Remove apenas Markers do mapa
-        mMap.overlays.removeIf { it is Marker }
+        val typeMap = mapOf(
+            "Todos" to null,
+            "Restaurantes" to "restaurant",
+            "Lojas" to "store",
+            "Shoppings" to "shopping",
+            "Parques" to "park"
+        )
 
-        val filtered = if (selectedType == "Todos") {
+        val dbValue = typeMap[selectedType]
+
+        val filtered = if (dbValue == null) {
             allServices
         } else {
-            allServices.filter { svc ->
-                val tipo = svc.tipo ?: ""
-                tipo.equals(selectedType, ignoreCase = true)
-            }
+            allServices.filter { it.tipo?.equals(dbValue, ignoreCase = true) == true }
         }
 
         for (service in filtered) {
@@ -182,59 +194,106 @@ class HomeActivity : AppCompatActivity() {
             val address = cardView.findViewById<TextView>(R.id.cardAddress)
             val image = cardView.findViewById<ImageView>(R.id.cardImage)
             val likeButton = cardView.findViewById<ImageButton>(R.id.likeButton)
-            val ratingContainer = cardView.findViewById<LinearLayout>(R.id.ratingContainer)
             val tvRating = cardView.findViewById<TextView>(R.id.tvRating)
             val tvTotalRatings = cardView.findViewById<TextView>(R.id.tvTotalRatings)
 
-            val mediaAvaliacao = service.mediaAvaliacao ?: 0.0   // Float ou Double
-            val totalAvaliacoes = service.totalAvaliacoes ?: 0   // Int
-
-            tvRating.text = String.format("%.1f", mediaAvaliacao)
-            tvTotalRatings.text = "($totalAvaliacoes)"
-
+            tvRating.text = String.format("%.1f", service.mediaAvaliacao ?: 0.0)
+            tvTotalRatings.text = "(${service.totalAvaliacoes ?: 0})"
             title.text = service.nome
             address.text = service.endereco ?: "Endereço não informado"
 
-            val imageUrl = service.imagemCapaUrl
-            if (!imageUrl.isNullOrBlank()) {
-                Glide.with(this)
-                    .load(imageUrl)
-                    .into(image)
-            } else {
-                image.setImageDrawable(null)
-            }
+            Glide.with(this)
+                .load(service.imagemCapaUrl)
+                .into(image)
 
             var liked = false
             likeButton.setImageResource(R.drawable.ic_heart_border)
-
             likeButton.setOnClickListener {
                 liked = !liked
-                if (liked) {
-                    likeButton.setImageResource(R.drawable.ic_heart_filled)
-                } else {
-                    likeButton.setImageResource(R.drawable.ic_heart_border)
-                }
+                likeButton.setImageResource(
+                    if (liked) R.drawable.ic_heart_filled else R.drawable.ic_heart_border
+                )
+            }
+
+            cardView.setOnClickListener {
+                val intent = Intent(this@HomeActivity, DetalhesLocal::class.java)
+                intent.putExtra("SERVICO_ID", service.id)
+                startActivity(intent)
+            }
+
+            title.setOnClickListener {
+                val intent = Intent(this@HomeActivity, DetalhesLocal::class.java)
+                intent.putExtra("SERVICO_ID", service.id)
+                startActivity(intent)
             }
 
             container.addView(cardView)
 
-            val lat = service.lat
-            val lng = service.lng
-            if (lat != null && lng != null) {
-                val marker = Marker(mMap)
-                marker.position = GeoPoint(lat, lng)
-                marker.title = service.nome
-                marker.setOnMarkerClickListener { _, _ ->
-                    showMarkerPopup(service)
-                    true
+            service.lat?.let { lat ->
+                service.lng?.let { lng ->
+                    val marker = googleMap?.addMarker(
+                        MarkerOptions().position(LatLng(lat, lng)).title(service.nome)
+                    )
+                    marker?.tag = service
                 }
-                mMap.overlays.add(marker)
-            } else {
-                Log.w("HomeActivity", "Serviço ${service.id} sem lat/lng — ajuste backend/model.")
             }
         }
+    }
 
-        mMap.invalidate()
+    private fun updateCardsAndMapByService(service: ServicoListagemResponse) {
+        val container = binding.cardContainer
+        container.removeAllViews()
+        googleMap?.clear()
+
+        val cardView = LayoutInflater.from(this)
+            .inflate(R.layout.card_item_layout, container, false)
+
+        val title = cardView.findViewById<TextView>(R.id.cardTitle)
+        val address = cardView.findViewById<TextView>(R.id.cardAddress)
+        val image = cardView.findViewById<ImageView>(R.id.cardImage)
+        val likeButton = cardView.findViewById<ImageButton>(R.id.likeButton)
+        val tvRating = cardView.findViewById<TextView>(R.id.tvRating)
+        val tvTotalRatings = cardView.findViewById<TextView>(R.id.tvTotalRatings)
+
+        tvRating.text = String.format("%.1f", service.mediaAvaliacao ?: 0.0)
+        tvTotalRatings.text = "(${service.totalAvaliacoes ?: 0})"
+        title.text = service.nome
+        address.text = service.endereco ?: "Endereço não informado"
+
+        Glide.with(this)
+            .load(service.imagemCapaUrl)
+            .into(image)
+
+        var liked = false
+        likeButton.setImageResource(R.drawable.ic_heart_border)
+        likeButton.setOnClickListener {
+            liked = !liked
+            likeButton.setImageResource(
+                if (liked) R.drawable.ic_heart_filled else R.drawable.ic_heart_border
+            )
+        }
+
+        cardView.setOnClickListener {
+            val intent = Intent(this@HomeActivity, DetalhesLocal::class.java)
+            intent.putExtra("SERVICO_ID", service.id)
+            startActivity(intent)
+        }
+
+        title.setOnClickListener {
+            val intent = Intent(this@HomeActivity, DetalhesLocal::class.java)
+            intent.putExtra("SERVICO_ID", service.id)
+            startActivity(intent)
+        }
+
+        container.addView(cardView)
+
+        service.lat?.let { lat ->
+            service.lng?.let { lng ->
+                val position = LatLng(lat, lng)
+                val marker = googleMap?.addMarker(MarkerOptions().position(position).title(service.nome))
+                marker?.tag = service
+            }
+        }
     }
 
     private fun setupLinkToListaServicos() {
@@ -242,12 +301,144 @@ class HomeActivity : AppCompatActivity() {
         tvLink.paintFlags = tvLink.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         tvLink.setTextColor(getColor(R.color.teal_700))
         tvLink.setOnClickListener {
-            val intent = Intent(this, ListaServicos::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, com.example.applicationtravo.ui.listaServicos.ListaServicos::class.java))
         }
     }
 
-    private fun showMarkerPopup(service: ServicoListagemResponse) {
-        // TODO: inflar layout customizado para exibir imagem + nome + endereço
+    private fun performSearch(query: String) {
+        if (query.isBlank()) {
+            updateCardsAndMap("Todos")
+            return
+        }
+
+        val filtered = allServices.filter { it.nome.contains(query, ignoreCase = true) }
+
+        if (filtered.isEmpty()) {
+            binding.cardContainer.removeAllViews()
+            googleMap?.clear()
+            return
+        }
+
+        val first = filtered.first()
+        first.lat?.let { lat ->
+            first.lng?.let { lng ->
+                googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lat, lng), 14f))
+            }
+        }
+
+        val container = binding.cardContainer
+        container.removeAllViews()
+        googleMap?.clear()
+
+        for (service in filtered) {
+            val cardView = LayoutInflater.from(this)
+                .inflate(R.layout.card_item_layout, container, false)
+
+            val title = cardView.findViewById<TextView>(R.id.cardTitle)
+            val address = cardView.findViewById<TextView>(R.id.cardAddress)
+            val image = cardView.findViewById<ImageView>(R.id.cardImage)
+            val likeButton = cardView.findViewById<ImageButton>(R.id.likeButton)
+            val tvRating = cardView.findViewById<TextView>(R.id.tvRating)
+            val tvTotalRatings = cardView.findViewById<TextView>(R.id.tvTotalRatings)
+
+            tvRating.text = String.format("%.1f", service.mediaAvaliacao ?: 0.0)
+            tvTotalRatings.text = "(${service.totalAvaliacoes ?: 0})"
+            title.text = service.nome
+            address.text = service.endereco ?: "Endereço não informado"
+
+            Glide.with(this)
+                .load(service.imagemCapaUrl)
+                .into(image)
+
+            var liked = false
+            likeButton.setImageResource(R.drawable.ic_heart_border)
+            likeButton.setOnClickListener {
+                liked = !liked
+                likeButton.setImageResource(
+                    if (liked) R.drawable.ic_heart_filled else R.drawable.ic_heart_border
+                )
+            }
+
+            container.addView(cardView)
+
+            service.lat?.let { lat ->
+                service.lng?.let { lng ->
+                    val position = LatLng(lat, lng)
+                    val marker = googleMap?.addMarker(
+                        MarkerOptions().position(position).title(service.nome)
+                    )
+                    marker?.tag = service
+                }
+            }
+        }
     }
+
+    private fun setupSearchBar() {
+        val searchEdit = binding.etSearch
+        val popup = ListPopupWindow(this)
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mutableListOf())
+        popup.setAdapter(adapter)
+        popup.anchorView = searchEdit
+        popup.isModal = false
+
+        // Quando os serviços carregarem, adiciona ao adapter
+        lifecycleScope.launch {
+            val services = allServices
+            adapter.clear()
+            adapter.addAll(services.mapNotNull { it.nome })
+            adapter.notifyDataSetChanged()
+        }
+
+        searchEdit.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(s: android.text.Editable?) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val query = s.toString().trim()
+                if (query.isEmpty()) {
+                    popup.dismiss()
+                    return
+                }
+
+                val filtered = allServices.mapNotNull { it.nome }
+                    .filter { it.contains(query, ignoreCase = true) }
+                adapter.clear()
+                adapter.addAll(filtered)
+                adapter.notifyDataSetChanged()
+
+                if (!popup.isShowing) popup.show()
+                searchEdit.requestFocus()
+            }
+        })
+
+        popup.setOnItemClickListener { _, _, position, _ ->
+            val selectedName = adapter.getItem(position)
+            val service = allServices.find { it.nome == selectedName }
+            if (service != null) {
+                searchEdit.setText(service.nome)
+                searchEdit.clearFocus()
+                popup.dismiss()
+
+                service.lat?.let { lat ->
+                    service.lng?.let { lng ->
+                        val pos = LatLng(lat, lng)
+                        googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 17f))
+                    }
+                }
+                updateCardsAndMapByService(service)
+            }
+        }
+
+        searchEdit.setOnEditorActionListener { _, _, _ ->
+            val query = searchEdit.text.toString().trim()
+            popup.dismiss()
+            performSearch(query)
+            true
+        }
+    }
+
+    override fun onResume() { super.onResume(); mapView.onResume() }
+    override fun onPause() { super.onPause(); mapView.onPause() }
+    override fun onDestroy() { super.onDestroy(); mapView.onDestroy() }
+    override fun onLowMemory() { super.onLowMemory(); mapView.onLowMemory() }
 }
