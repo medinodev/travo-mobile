@@ -55,6 +55,12 @@ interface TravoServiceAPI {
     ): Response<LocalDetalheResponse>
 
     // CUPONS
+    @POST("/cupons/:id/claim")
+    suspend fun claim(@Body registroRequest: RegistroRequest): Response<Unit>
+
+    @POST("/cupons/validar")
+    suspend fun validar(@Body registroRequest: RegistroRequest): Response<Unit>
+
     @GET("cuponsall")
     suspend fun listarTodosCupons(): Response<List<CupomResponse>>
 
