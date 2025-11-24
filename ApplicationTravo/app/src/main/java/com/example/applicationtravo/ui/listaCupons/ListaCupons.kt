@@ -68,6 +68,53 @@ class ListaCupons : AppCompatActivity() {
         }
     }
 
+    private fun usarCupom(cupom: CupomResponse) {
+        lifecycleScope.launch {
+            try {
+                val prefs = getSharedPreferences("TravoApp", MODE_PRIVATE)
+                val token = prefs.getString("token", null)
+
+                if (token == null) {
+                    Log.e("API", "Token não encontrado — usuário não logado")
+                    return@launch
+                }
+
+                val api = RetrofitService.getTravoServiceAPIWithToken(token)
+
+                val response = api.claimCupom(cupom.id)
+
+                if (response.isSuccessful && response.body() != null) {
+                    val cupomCliente = response.body()!!
+                    val codigo = cupomCliente.codigo
+
+                    androidx.appcompat.app.AlertDialog.Builder(this@ListaCupons)
+                        .setTitle("Cupom gerado")
+                        .setMessage("Mostre este código no estabelecimento:\n\n$codigo")
+                        .setPositiveButton("OK", null)
+                        .show()
+
+                    Log.d("API", "Cupom usado: código = $codigo")
+                } else {
+                    Log.e("API", "Erro ao usar cupom: ${response.code()} - ${response.message()}")
+                    androidx.appcompat.app.AlertDialog.Builder(this@ListaCupons)
+                        .setTitle("Erro")
+                        .setMessage("Não foi possível usar o cupom. Tente novamente.")
+                        .setPositiveButton("OK", null)
+                        .show()
+                }
+
+            } catch (e: Exception) {
+                Log.e("API", "Erro ao usar cupom: ${e.message}")
+                androidx.appcompat.app.AlertDialog.Builder(this@ListaCupons)
+                    .setTitle("Erro")
+                    .setMessage("Ocorreu um erro ao usar o cupom.")
+                    .setPositiveButton("OK", null)
+                    .show()
+            }
+        }
+    }
+
+
     private fun carregarCupons() {
         lifecycleScope.launch {
             try {
@@ -84,7 +131,11 @@ class ListaCupons : AppCompatActivity() {
 
                 if (response.isSuccessful && response.body() != null) {
                     val lista = response.body()!!
-                    adapter = CupomAdapter(lista)
+
+                    adapter = CupomAdapter(lista) { cupom ->
+                        usarCupom(cupom)
+                    }
+
                     recyclerView.adapter = adapter
                     Log.d("API", "Total de cupons recebidos: ${lista.size}")
                 } else {
