@@ -37,7 +37,7 @@ class CupomAdapter(
     override fun onBindViewHolder(holder: CupomViewHolder, position: Int) {
         val cupom = lista[position]
 
-        holder.nome.text = cupom.nome
+        holder.nome.text = cupom.nome ?: "Cupom sem nome"
         holder.descricao.text = cupom.descricao ?: "Sem descrição"
         holder.validade.text = "Válido até: ${cupom.expiration ?: "Indefinido"}"
 
@@ -78,10 +78,17 @@ class CupomAdapter(
         lista = if (query.isEmpty()) {
             listaOriginal
         } else {
-            listaOriginal.filter { it.nome.contains(query, ignoreCase = true) }
+            val q = query.trim()
+            listaOriginal.filter { cupom ->
+                (cupom.nome ?: "")
+                    .contains(q, ignoreCase = true) ||
+                        (cupom.descricao ?: "")
+                            .contains(q, ignoreCase = true)
+            }
         }
         notifyDataSetChanged()
     }
+
 
     fun mostrarFavoritos() {
         mostrandoFavoritos = !mostrandoFavoritos
