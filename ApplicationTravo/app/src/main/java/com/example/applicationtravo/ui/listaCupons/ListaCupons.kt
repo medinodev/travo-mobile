@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 
 class ListaCupons : AppCompatActivity() {
 
+    private var mapaLojas: Map<Int, String> = emptyMap()
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: CupomAdapter
     private lateinit var searchEditText: EditText
@@ -125,33 +126,36 @@ class ListaCupons : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val prefs = getSharedPreferences("TravoApp", MODE_PRIVATE)
-                val token = prefs.getString("token", null)
+                val token = prefs.getString("token", null) ?: return@launch
 
-                if (token == null) {
-                    Log.e("API", "Token não encontrado — usuário não logado")
-                    return@launch
+                val api = RetrofitService.getTravoServiceAPIWithToken(token)
+
+                val servicosResponse = api.listarServicos()
+                if (servicosResponse.isSuccessful && servicosResponse.body() != null) {
+                    val servicos = servicosResponse.body()!!
+
+                    mapaLojas = servicos.associate { serv ->
+                        serv.id to serv.nome
+                    }
                 }
+                val cuponsResponse = api.listarTodosCupons()
+                if (cuponsResponse.isSuccessful && cuponsResponse.body() != null) {
+                    val lista = cuponsResponse.body()!!
 
-                val response = RetrofitService.getTravoServiceAPIWithToken(token)
-                    .listarTodosCupons()
-
-                if (response.isSuccessful && response.body() != null) {
-                    val lista = response.body()!!
-
-                    adapter = CupomAdapter(lista) { cupom ->
+                    adapter = CupomAdapter(
+                        lista,
+                        mapaLojas
+                    ) { cupom ->
                         usarCupom(cupom)
                     }
 
                     recyclerView.adapter = adapter
-                    Log.d("API", "Total de cupons recebidos: ${lista.size}")
-                } else {
-                    Log.e("API", "Erro na resposta: ${response.code()} - ${response.message()}")
                 }
 
             } catch (e: Exception) {
-                Log.e("API", "Erro ao carregar cupons: ${e.message}")
             }
         }
+
     }
 
     private fun configurarBusca() {

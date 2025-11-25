@@ -12,6 +12,7 @@ import android.widget.Button
 
 class CupomAdapter(
     private var lista: List<CupomResponse>,
+    private val mapaLojas: Map<Int, String>,
     private val onUseClick: (CupomResponse) -> Unit
 ) : RecyclerView.Adapter<CupomAdapter.CupomViewHolder>() {
 
@@ -36,13 +37,23 @@ class CupomAdapter(
 
     override fun onBindViewHolder(holder: CupomViewHolder, position: Int) {
         val cupom = lista[position]
+        val tipo = cupom.nome ?: ""
+        val valor = cupom.descricao ?: ""
 
-        holder.nome.text = cupom.nome ?: "Cupom sem nome"
-        holder.descricao.text = cupom.descricao ?: "Sem descrição"
+        holder.nome.text =
+            if (valor.isNotBlank() && tipo.isNotBlank())
+                "$valor% de desconto em $tipo"
+            else if (valor.isNotBlank())
+                "$valor% de desconto"
+            else
+                tipo.ifBlank { "Desconto" }
+
+        val nomeLoja = mapaLojas[cupom.estabelecimento_id] ?: "Estabelecimento"
+        holder.descricao.text = nomeLoja
+
         holder.validade.text = "Válido até: ${cupom.expiration ?: "Indefinido"}"
 
         val idCupom = cupom.id ?: -1
-
         val icon = if (favoritos.contains(idCupom))
             android.R.drawable.btn_star_big_on
         else
@@ -58,6 +69,7 @@ class CupomAdapter(
             }
             notifyItemChanged(position)
         }
+
         if (!cupom.codigo.isNullOrBlank()) {
             holder.txtCodigo.visibility = View.VISIBLE
             holder.txtCodigo.text = "Código: ${cupom.codigo}"
@@ -75,20 +87,17 @@ class CupomAdapter(
     override fun getItemCount(): Int = lista.size
 
     fun filter(query: String) {
-        lista = if (query.isEmpty()) {
+        val q = query.trim()
+        lista = if (q.isEmpty()) {
             listaOriginal
         } else {
-            val q = query.trim()
             listaOriginal.filter { cupom ->
-                (cupom.nome ?: "")
-                    .contains(q, ignoreCase = true) ||
-                        (cupom.descricao ?: "")
-                            .contains(q, ignoreCase = true)
+                (cupom.nome ?: "").contains(q, ignoreCase = true) ||
+                        (cupom.descricao ?: "").contains(q, ignoreCase = true)
             }
         }
         notifyDataSetChanged()
     }
-
 
     fun mostrarFavoritos() {
         mostrandoFavoritos = !mostrandoFavoritos
@@ -100,3 +109,4 @@ class CupomAdapter(
         notifyDataSetChanged()
     }
 }
+
