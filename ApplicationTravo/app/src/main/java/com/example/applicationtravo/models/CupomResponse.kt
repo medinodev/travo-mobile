@@ -8,7 +8,7 @@ data class CupomResponse(
     val estabelecimento_id: Int,
 
     @SerializedName("nome")
-    val nome: String,
+    val nome: String?,
 
     @SerializedName("descricao")
     val descricao: String?,

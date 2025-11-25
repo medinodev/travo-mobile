@@ -9,7 +9,10 @@ import com.example.applicationtravo.models.ReviewResponse
 import com.example.applicationtravo.models.ServicoListagemResponse
 import com.example.applicationtravo.models.UsuariosResponse
 import com.example.applicationtravo.models.ChangePasswordRequest
+import com.example.applicationtravo.models.CupomClienteResponse
 import com.example.applicationtravo.models.FavoriteResponse
+import com.example.applicationtravo.models.ValidarCupomRequest
+import com.example.applicationtravo.models.ValidarCupomResponse
 
 import retrofit2.Response
 import retrofit2.http.Body
@@ -56,11 +59,12 @@ interface TravoServiceAPI {
     ): Response<LocalDetalheResponse>
 
     // CUPONS
-    @POST("/cupons/:id/claim")
-    suspend fun claim(@Body registroRequest: RegistroRequest): Response<Unit>
+    @POST("cupons/{id}/claim")
+    suspend fun claimCupom(@Path("id") cupomId: Int): Response<CupomClienteResponse>
 
-    @POST("/cupons/validar")
-    suspend fun validar(@Body registroRequest: RegistroRequest): Response<Unit>
+    @POST("cupons/validar")
+    suspend fun validarCupom(@Body request: ValidarCupomRequest): Response<ValidarCupomResponse>
+
 
     @GET("cuponsall")
     suspend fun listarTodosCupons(): Response<List<CupomResponse>>
