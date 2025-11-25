@@ -1,12 +1,17 @@
 package com.example.applicationtravo.ui.detalhesLocal
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,6 +53,11 @@ class DetalhesLocal : AppCompatActivity() {
     private lateinit var rvReviews: RecyclerView
     private val reviewsAdapter = ReviewsAdapter() // adapter simples de reviews
 
+    // Favoritos
+    private var servicoId: Int = -1
+    private var isFavorito: Boolean = false
+    private var menuItemFavorite: MenuItem? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -66,7 +76,7 @@ class DetalhesLocal : AppCompatActivity() {
         setupCuponsList()
         setupReviewsList()
 
-        val servicoId = intent.getIntExtra("SERVICO_ID", -1)
+        servicoId = intent.getIntExtra("SERVICO_ID", -1)
         if (servicoId <= 0) {
             Log.e("DetalhesLocal", "SERVICO_ID inválido")
             finish()
@@ -76,6 +86,7 @@ class DetalhesLocal : AppCompatActivity() {
         carregarDetalhes(servicoId)
         carregarCupons(servicoId)
         carregarAvaliacoes(servicoId)
+        verificarSeFavorito(servicoId)
 
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -119,6 +130,22 @@ class DetalhesLocal : AppCompatActivity() {
     private fun setupToolbar() {
         toolbar.setNavigationIcon(R.drawable.ic_chevron_left_24)
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
+        toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.action_favorite -> {
+                    toggleFavorito()
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        menuItemFavorite = menu?.findItem(R.id.action_favorite)
+        atualizarIconeFavorito()
+        return true
     }
 
     private fun setupCuponsList() {
@@ -225,6 +252,90 @@ class DetalhesLocal : AppCompatActivity() {
             } catch (e: Exception) {
                 Log.e("API", "Falha ao listar avaliações: ${e.message}")
             }
+        }
+    }
+
+    private fun verificarSeFavorito(servicoId: Int) {
+        val sharedPref = getSharedPreferences("TravoApp", Context.MODE_PRIVATE)
+        val token = sharedPref.getString("token", null)
+
+        if (token.isNullOrEmpty()) {
+            // Usuário não logado, não mostra opção de favoritar
+            return
+        }
+
+        val api = RetrofitService.getTravoServiceAPIWithToken(token)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = api.listarFavoritos()
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        val favoritos = response.body() ?: emptyList()
+                        isFavorito = favoritos.any { it.id == servicoId }
+                        atualizarIconeFavorito()
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("DetalhesLocal", "Erro ao verificar favorito: ${e.message}")
+            }
+        }
+    }
+
+    private fun toggleFavorito() {
+        val sharedPref = getSharedPreferences("TravoApp", Context.MODE_PRIVATE)
+        val token = sharedPref.getString("token", null)
+
+        if (token.isNullOrEmpty()) {
+            Toast.makeText(this, "Faça login para favoritar", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val api = RetrofitService.getTravoServiceAPIWithToken(token)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = if (isFavorito) {
+                    api.removerFavorito(servicoId)
+                } else {
+                    api.adicionarFavorito(servicoId)
+                }
+
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        isFavorito = !isFavorito
+                        atualizarIconeFavorito()
+                        val mensagem = if (isFavorito) {
+                            "Adicionado aos favoritos"
+                        } else {
+                            "Removido dos favoritos"
+                        }
+                        Toast.makeText(this@DetalhesLocal, mensagem, Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(
+                            this@DetalhesLocal,
+                            "Erro ao ${if (isFavorito) "remover" else "adicionar"} favorito",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@DetalhesLocal,
+                        "Erro: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+    private fun atualizarIconeFavorito() {
+        menuItemFavorite?.icon = if (isFavorito) {
+            ContextCompat.getDrawable(this, R.drawable.ic_heart_filled)
+        } else {
+            ContextCompat.getDrawable(this, R.drawable.ic_heart_border)
         }
     }
 }

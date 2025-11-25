@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.applicationtravo.R
+import com.example.applicationtravo.models.FavoriteItem
 
 class FavoriteAdapter(
-    private var items: List<FavoriteUi> = emptyList(),
-    private val onClick: (FavoriteUi) -> Unit
+    private var items: List<FavoriteItem> = emptyList(),
+    private val onClick: (FavoriteItem) -> Unit
 ) : RecyclerView.Adapter<FavoriteAdapter.VH>() {
 
     inner class VH(parent: ViewGroup) : RecyclerView.ViewHolder(
@@ -29,7 +30,7 @@ class FavoriteAdapter(
 
     override fun getItemCount(): Int = items.size
 
-    fun submit(newItems: List<FavoriteUi>) {
+    fun submit(newItems: List<FavoriteItem>) {
         items = newItems
         notifyDataSetChanged()
     }

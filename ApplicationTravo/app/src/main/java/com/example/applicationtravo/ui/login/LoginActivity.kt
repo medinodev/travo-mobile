@@ -20,6 +20,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import java.net.ConnectException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 class LoginActivity : AppCompatActivity() {
 
@@ -113,13 +116,56 @@ class LoginActivity : AppCompatActivity() {
                             }
                             println("DEBUG: Erro no login: $errorBody")
                         }
+                    } catch (e: ConnectException) {
+                        println("DEBUG: Erro de conexão: ${e.message}")
+                        e.printStackTrace()
+                        withContext(Dispatchers.Main) {
+                            val errorMessage = when {
+                                e.message?.contains("EHOSTUNREACH") == true || 
+                                e.message?.contains("No route to host") == true ->
+                                    "Não foi possível conectar ao servidor. Verifique:\n" +
+                                    "• Se o servidor está rodando\n" +
+                                    "• Se o dispositivo está na mesma rede\n" +
+                                    "• Se o IP do servidor está correto"
+                                e.message?.contains("timeout") == true || 
+                                e.message?.contains("timed out") == true ->
+                                    "Tempo de conexão esgotado. Verifique sua conexão de rede."
+                                else ->
+                                    "Erro de conexão: ${e.message}\nVerifique se o servidor está acessível."
+                            }
+                            Toast.makeText(
+                                this@LoginActivity,
+                                errorMessage,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    } catch (e: SocketTimeoutException) {
+                        println("DEBUG: Timeout no login: ${e.message}")
+                        e.printStackTrace()
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Tempo de conexão esgotado. Verifique sua conexão de rede.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    } catch (e: UnknownHostException) {
+                        println("DEBUG: Host desconhecido: ${e.message}")
+                        e.printStackTrace()
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Servidor não encontrado. Verifique o endereço do servidor.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                     } catch (e: Exception) {
                         println("DEBUG: Erro no login: ${e.message}")
                         e.printStackTrace()
                         withContext(Dispatchers.Main) {
                             Toast.makeText(
                                 this@LoginActivity,
-                                "Erro de conexão: ${e.message}",
+                                "Erro ao conectar: ${e.message ?: "Erro desconhecido"}",
                                 Toast.LENGTH_LONG
                             ).show()
                         }

@@ -9,13 +9,16 @@ object RetrofitService {
     private var travoServiceAPIWithToken: TravoServiceAPI? = null
 
     // Constante para a URL base
-    //private const val BASE_URL = "http://192.168.0.11:3000/rest/v1/" // Dispositivo físico
-    private const val BASE_URL = "http://10.0.2.2:3000/rest/v1/" // Emulador
+    private const val BASE_URL = "http://192.168.0.10:3000/rest/v1/" // Dispositivo físico
+    //private const val BASE_URL = "http://10.0.2.2:3000/rest/v1/" // Emulador
 
     fun getTravoServiceAPI(): TravoServiceAPI {
         // Força recriação para evitar cache (útil durante desenvolvimento)
         // TODO: Remover recriação forçada em produção para melhor performance
         val okHttpClient = OkHttpClient.Builder()
+            .connectTimeout(15, java.util.concurrent.TimeUnit.SECONDS) // Timeout de conexão
+            .readTimeout(15, java.util.concurrent.TimeUnit.SECONDS) // Timeout de leitura
+            .writeTimeout(15, java.util.concurrent.TimeUnit.SECONDS) // Timeout de escrita
             .addInterceptor(LoggingInterceptor()) // Adiciona logging de todas as requisições
             .build()
 
@@ -44,6 +47,9 @@ object RetrofitService {
         if(travoServiceAPIWithToken == null){
 
             val okHttpClient = OkHttpClient.Builder()
+                .connectTimeout(15, java.util.concurrent.TimeUnit.SECONDS) // Timeout de conexão
+                .readTimeout(15, java.util.concurrent.TimeUnit.SECONDS) // Timeout de leitura
+                .writeTimeout(15, java.util.concurrent.TimeUnit.SECONDS) // Timeout de escrita
                 .addInterceptor(AuthInterceptor(token))
                 .build()
 
