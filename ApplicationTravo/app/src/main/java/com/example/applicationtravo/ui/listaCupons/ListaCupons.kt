@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -87,21 +88,26 @@ class ListaCupons : AppCompatActivity() {
                     val cupomCliente = response.body()!!
                     val codigo = cupomCliente.codigo
 
-                    androidx.appcompat.app.AlertDialog.Builder(this@ListaCupons)
+                    AlertDialog.Builder(this@ListaCupons)
                         .setTitle("Cupom gerado")
                         .setMessage("Mostre este código no estabelecimento:\n\n$codigo")
                         .setPositiveButton("OK", null)
                         .show()
-
-                    Log.d("API", "Cupom usado: código = $codigo")
                 } else {
-                    Log.e("API", "Erro ao usar cupom: ${response.code()} - ${response.message()}")
-                    androidx.appcompat.app.AlertDialog.Builder(this@ListaCupons)
+                    val mensagemErro = try {
+                        val erroBody = response.errorBody()?.string()
+                        erroBody ?: "Não foi possível usar o cupom."
+                    } catch (e: Exception) {
+                        "Não foi possível usar o cupom."
+                    }
+
+                    AlertDialog.Builder(this@ListaCupons)
                         .setTitle("Erro")
-                        .setMessage("Não foi possível usar o cupom. Tente novamente.")
+                        .setMessage(mensagemErro)
                         .setPositiveButton("OK", null)
                         .show()
                 }
+
 
             } catch (e: Exception) {
                 Log.e("API", "Erro ao usar cupom: ${e.message}")
