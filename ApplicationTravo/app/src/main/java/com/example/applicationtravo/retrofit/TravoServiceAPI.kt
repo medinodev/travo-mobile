@@ -17,6 +17,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.PATCH
+import retrofit2.http.DELETE
 import retrofit2.http.Query
 
 interface TravoServiceAPI {
@@ -77,6 +78,24 @@ interface TravoServiceAPI {
     suspend fun listarAvaliacoesDoServico(
         @Query("servicoId") idServico: Int? = null
     ): Response<List<ReviewResponse>>
+
+    // FAVORITOS
+    // Retorna os serviços favoritados do usuário autenticado (identificado pelo token JWT)
+    // A tabela favoritos relaciona usuario_id com estabelecimento_id (servico_id)
+    @GET("favoritos")
+    suspend fun listarFavoritos(): Response<List<ServicoListagemResponse>>
+
+    // Adiciona um favorito: cria registro na tabela favoritos com usuario_id (do token) e estabelecimento_id (servicoId)
+    @POST("favoritos/{servicoId}")
+    suspend fun adicionarFavorito(
+        @Path("servicoId") idServico: Int // estabelecimento_id no banco
+    ): Response<Unit>
+
+    // Remove um favorito: deleta registro da tabela favoritos para o usuário autenticado e serviço especificado
+    @DELETE("favoritos/{servicoId}")
+    suspend fun removerFavorito(
+        @Path("servicoId") idServico: Int // estabelecimento_id no banco
+    ): Response<Unit>
 
     @GET(value = "favoritos")
     suspend fun getAllFavoritos(): Response<List<FavoriteResponse>>
