@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.applicationtravo.R
 import com.example.applicationtravo.models.CupomResponse
 import com.example.applicationtravo.retrofit.RetrofitService
-import com.example.applicationtravo.ui.TesteHomeActivity
+import com.example.applicationtravo.ui.home.HomeActivity
 import com.example.applicationtravo.ui.configuracoes.Configuracoes
 import com.example.applicationtravo.ui.listaServicos.ListaServicos
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -161,8 +161,8 @@ class ListaCupons : AppCompatActivity() {
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
-                    // Ir para a Home/Lista de Serviços
-                    startActivity(Intent(this, ListaServicos::class.java))
+                    // Ir para a Home
+                    startActivity(Intent(this, HomeActivity::class.java))
                     true
                 }
                 R.id.nav_descontos -> true // Já estamos aqui, só retorna true

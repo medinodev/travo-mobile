@@ -1,5 +1,6 @@
 package com.example.applicationtravo.retrofit
 
+import com.example.applicationtravo.models.AnexoResponse
 import com.example.applicationtravo.models.CupomResponse
 import com.example.applicationtravo.models.LocalDetalheResponse
 import com.example.applicationtravo.models.LoginRequest
@@ -103,5 +104,11 @@ interface TravoServiceAPI {
 
     @GET(value = "favoritos")
     suspend fun getAllFavoritos(): Response<List<FavoriteResponse>>
+
+    @GET("anexos/perfil/{entidade_tipo}/{entidade_id}")
+    suspend fun getProfilePic(
+        @Path("entidade_tipo") entidadeTipo: String,
+        @Path("entidade_id") entidadeId: Int
+    ): Response<AnexoResponse>
 
 }
