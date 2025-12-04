@@ -17,7 +17,6 @@
         android:background="?attr/colorSurface"
         app:title="Detalhe do Local"
         app:titleCentered="false"
-        app:menu="@menu/toolbar_menu"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
