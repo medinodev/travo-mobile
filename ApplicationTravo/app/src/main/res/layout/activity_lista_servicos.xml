@@ -22,55 +22,80 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Barra de busca -->
+    <!-- Barra de busca (ajustada: maior altura, padding interno, ícone limpar separado) -->
     <LinearLayout
         android:id="@+id/searchRow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="12dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="6dp"
         android:gravity="center_vertical"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <!-- TextInputLayout com outline e altura maior para ficar visualmente equilibrado -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/searchInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="52dp"
             android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeWidth="1dp"
+            app:boxStrokeColor="@color/black"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
             app:startIconDrawable="@drawable/search_bar_bg"
-            app:endIconMode="clear_text">
+            app:startIconTint="@color/black"
+>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etBusca"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Buscar"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etBusca"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Buscar serviços, locais ou palavras-chave"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/darker_gray" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Botão existente (modo lista / layout) -->
-        <ImageButton
-            android:id="@+id/btnModoLista"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/content_desc_layout"
-            android:src="@drawable/ic_view_list_24" />
+    <!-- Botão modo lista / layout -->
+    <ImageButton
+        android:id="@+id/btnModoLista"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="6dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/content_desc_layout"
+        android:padding="8dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_view_list_24" />
 
-        <!-- NOVO: botão para abrir/fechar o painel de filtros -->
-        <ImageButton
-            android:id="@+id/btnToggleFiltros"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="4dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/abrir_filtros"
-            android:src="@drawable/ic_chevron_left_24" />
-    </LinearLayout>
+    <!-- Botão para abrir/fechar o painel de filtros -->
+    <ImageButton
+        android:id="@+id/btnToggleFiltros"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/abrir_filtros"
+        android:padding="8dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_chevron_left_24" />
+</LinearLayout>
+
 
     <!-- Título seção -->
     <TextView
@@ -211,7 +236,6 @@
                         android:text="10km" />
                 </LinearLayout>
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -253,17 +277,74 @@
         android:paddingEnd="12dp"
         android:clipToPadding="false"
         app:layout_constraintTop_toBottomOf="@id/tvTituloSecao"
-        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintBottom_toTopOf="@id/paginationBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/cardFiltros"
         tools:listitem="@layout/item_favorito" />
+
+    <!-- BARRA DE PAGINAÇÃO (fixa acima do BottomNavigation) -->
+    <LinearLayout
+        android:id="@+id/paginationBar"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:gravity="center_vertical"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Botão Anterior -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPrevPage"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Anterior"
+            android:textAllCaps="false"
+            app:strokeWidth="1dp"
+            app:cornerRadius="8dp" />
+
+        <!-- Indicador de página -->
+        <TextView
+            android:id="@+id/tvPageInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Página 1 de 10 • 0-9 de 100"
+            android:textSize="14sp" />
+
+        <!-- Botão Próximo -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNextPage"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Próximo"
+            android:textAllCaps="false"
+            app:strokeWidth="1dp"
+            app:cornerRadius="8dp" />
+
+        <!-- Seletor de tamanho da página (itens por página) -->
+        <Spinner
+            android:id="@+id/spinnerPageSize"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:contentDescription="Itens por página" />
+    </LinearLayout>
 
     <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:layout_height="81dp"
+        android:background="#FFC98D"
         app:itemIconTint="@color/selector_bottom_nav"
         app:itemTextColor="@color/selector_bottom_nav"
         app:labelVisibilityMode="labeled"
