@@ -9,7 +9,7 @@ object RetrofitService {
     private var travoServiceAPIWithToken: TravoServiceAPI? = null
 
     // Constante para a URL base
-    //private const val BASE_URL = "http://192.168.0.10:3000/rest/v1/" // Dispositivo físico
+    // private const val BASE_URL = "http://192.168.0.10:3000/rest/v1/" // Dispositivo físico
     private const val BASE_URL = "http://10.0.2.2:3000/rest/v1/" // Emulador
 
     fun getTravoServiceAPI(): TravoServiceAPI {
