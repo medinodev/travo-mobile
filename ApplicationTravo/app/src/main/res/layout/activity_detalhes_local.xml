@@ -246,8 +246,8 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="0dp"
-        android:layout_height="72dp"
-        android:background="#FFD398"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_nav_menu"
         app:itemIconTint="@color/selector_bottom_nav"

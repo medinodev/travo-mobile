@@ -26,7 +26,7 @@
         android:text="Recuperar Senha"
         android:textColor="@color/colorSecondary"
         android:textSize="20sp"
-        android:fontFamily="@font/volkhov_bold"
+        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/imageViewlogo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
