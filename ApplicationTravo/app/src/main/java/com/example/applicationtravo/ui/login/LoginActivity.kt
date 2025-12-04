@@ -14,7 +14,7 @@ import com.example.applicationtravo.ui.cadastro.CadastroActivity
 import com.example.applicationtravo.ui.recuperarSenha.RecuperarSenhaActivity
 import com.example.applicationtravo.models.LoginRequest
 import com.example.applicationtravo.retrofit.RetrofitService
-import com.example.applicationtravo.ui.TesteHomeActivity
+import com.example.applicationtravo.ui.home.HomeActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -90,8 +90,8 @@ class LoginActivity : AppCompatActivity() {
                                     Toast.LENGTH_SHORT
                                 ).show()
 
-                                println("DEBUG: Redirecionando para TesteHomeActivity")
-                                val intent = Intent(this@LoginActivity, TesteHomeActivity::class.java)
+                                println("DEBUG: Redirecionando para HomeActivity")
+                                val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                                 startActivity(intent)
                                 finish()
                             }

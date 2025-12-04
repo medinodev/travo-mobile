@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,18 +16,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.applicationtravo.R
 import com.example.applicationtravo.models.CupomResponse
 import com.example.applicationtravo.retrofit.RetrofitService
-import com.example.applicationtravo.ui.TesteHomeActivity
+import com.example.applicationtravo.ui.home.HomeActivity
 import com.example.applicationtravo.ui.configuracoes.Configuracoes
-import com.example.applicationtravo.ui.listaServicos.ListaServicos
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 
 class ListaCupons : AppCompatActivity() {
 
+    private var mapaLojas: Map<Int, String> = emptyMap()
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: CupomAdapter
-    private lateinit var searchEditText: EditText
-    private lateinit var clearButton: ImageButton
+    private lateinit var searchEditText: com.google.android.material.textfield.TextInputEditText
+//    private lateinit var clearButton: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,38 +38,15 @@ class ListaCupons : AppCompatActivity() {
         recyclerView = findViewById(R.id.recycler_cupons)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        searchEditText = findViewById(R.id.search_cupons)
-        clearButton = findViewById(R.id.btn_clear)
+        searchEditText = findViewById(R.id.etSearch)
+//        clearButton = findViewById(R.id.btn_clear)
 
         carregarCupons()
-        configurarFiltros()
         configurarBottomNavigation()
         configurarBusca()
-
-        bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-
-                R.id.nav_descontos -> {
-                    startActivity(Intent(this, ListaCupons::class.java))
-                    true
-                }
-
-                R.id.nav_home -> {
-                    startActivity(Intent(this, TesteHomeActivity::class.java))
-                    true
-                }
-
-                R.id.nav_config -> {
-                    startActivity(Intent(this, Configuracoes::class.java))
-                    true
-                }
-
-                else -> false
-            }
-        }
     }
 
-    private fun carregarCupons() {
+    private fun usarCupom(cupom: CupomResponse) {
         lifecycleScope.launch {
             try {
                 val prefs = getSharedPreferences("TravoApp", MODE_PRIVATE)
@@ -79,22 +57,81 @@ class ListaCupons : AppCompatActivity() {
                     return@launch
                 }
 
-                val response = RetrofitService.getTravoServiceAPIWithToken(token)
-                    .listarTodosCupons()
+                val api = RetrofitService.getTravoServiceAPIWithToken(token)
+
+                val response = api.claimCupom(cupom.id)
 
                 if (response.isSuccessful && response.body() != null) {
-                    val lista = response.body()!!
-                    adapter = CupomAdapter(lista)
-                    recyclerView.adapter = adapter
-                    Log.d("API", "Total de cupons recebidos: ${lista.size}")
+                    val cupomCliente = response.body()!!
+                    val codigo = cupomCliente.codigo
+
+                    AlertDialog.Builder(this@ListaCupons)
+                        .setTitle("Cupom gerado")
+                        .setMessage("Mostre este código no estabelecimento:\n\n$codigo")
+                        .setPositiveButton("OK", null)
+                        .show()
                 } else {
-                    Log.e("API", "Erro na resposta: ${response.code()} - ${response.message()}")
+                    val mensagemErro = try {
+                        val erroBody = response.errorBody()?.string()
+                        erroBody ?: "Não foi possível usar o cupom."
+                    } catch (e: Exception) {
+                        "Não foi possível usar o cupom."
+                    }
+
+                    AlertDialog.Builder(this@ListaCupons)
+                        .setTitle("Erro")
+                        .setMessage(mensagemErro)
+                        .setPositiveButton("OK", null)
+                        .show()
+                }
+
+
+            } catch (e: Exception) {
+                Log.e("API", "Erro ao usar cupom: ${e.message}")
+                androidx.appcompat.app.AlertDialog.Builder(this@ListaCupons)
+                    .setTitle("Erro")
+                    .setMessage("Ocorreu um erro ao usar o cupom.")
+                    .setPositiveButton("OK", null)
+                    .show()
+            }
+        }
+    }
+
+
+    private fun carregarCupons() {
+        lifecycleScope.launch {
+            try {
+                val prefs = getSharedPreferences("TravoApp", MODE_PRIVATE)
+                val token = prefs.getString("token", null) ?: return@launch
+
+                val api = RetrofitService.getTravoServiceAPIWithToken(token)
+
+                val servicosResponse = api.listarServicos()
+                if (servicosResponse.isSuccessful && servicosResponse.body() != null) {
+                    val servicos = servicosResponse.body()!!
+
+                    mapaLojas = servicos.associate { serv ->
+                        serv.id to serv.nome
+                    }
+                }
+                val cuponsResponse = api.listarTodosCupons()
+                if (cuponsResponse.isSuccessful && cuponsResponse.body() != null) {
+                    val lista = cuponsResponse.body()!!
+
+                    adapter = CupomAdapter(
+                        lista,
+                        mapaLojas
+                    ) { cupom ->
+                        usarCupom(cupom)
+                    }
+
+                    recyclerView.adapter = adapter
                 }
 
             } catch (e: Exception) {
-                Log.e("API", "Erro ao carregar cupons: ${e.message}")
             }
         }
+
     }
 
     private fun configurarBusca() {
@@ -111,9 +148,9 @@ class ListaCupons : AppCompatActivity() {
         })
 
 
-        clearButton.setOnClickListener {
-            searchEditText.text.clear()
-        }
+//        clearButton.setOnClickListener {
+//            searchEditText.text.clear()
+//        }
     }
 
     private fun configurarBottomNavigation() {
@@ -123,7 +160,7 @@ class ListaCupons : AppCompatActivity() {
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
-                    startActivity(Intent(this, ListaServicos::class.java))
+                    startActivity(Intent(this, HomeActivity::class.java))
                     true
                 }
                 R.id.nav_descontos -> true
@@ -132,14 +169,6 @@ class ListaCupons : AppCompatActivity() {
                     true
                 }
                 else -> false
-            }
-        }
-    }
-    private fun configurarFiltros() {
-        val btnFavoritos = findViewById<Button>(R.id.btn_favoritos)
-        btnFavoritos.setOnClickListener {
-            if (::adapter.isInitialized) {
-                adapter.mostrarFavoritos()
             }
         }
     }

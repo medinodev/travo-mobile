@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.applicationtravo.R
 import com.example.applicationtravo.retrofit.RetrofitService
-import com.example.applicationtravo.ui.TesteHomeActivity
+import com.example.applicationtravo.ui.home.HomeActivity
 import com.example.applicationtravo.ui.configuracoes.Configuracoes
 import com.example.applicationtravo.ui.listaCupons.ListaCupons
 import com.google.android.material.appbar.MaterialToolbar
@@ -86,7 +86,7 @@ class DetalhesLocal : AppCompatActivity() {
                 }
 
                 R.id.nav_home -> {
-                    startActivity(Intent(this, TesteHomeActivity::class.java))
+                    startActivity(Intent(this, HomeActivity::class.java))
                     true
                 }
 

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.applicationtravo.R
 import com.example.applicationtravo.models.FavoriteResponse
 import com.example.applicationtravo.retrofit.RetrofitService
-import com.example.applicationtravo.ui.TesteHomeActivity
+import com.example.applicationtravo.ui.home.HomeActivity
 import com.example.applicationtravo.ui.configuracoes.Configuracoes
 import com.example.applicationtravo.ui.listaCupons.ListaCupons
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -146,7 +146,7 @@ class Favoritos : AppCompatActivity() {
                     startActivity(Intent(this, ListaCupons::class.java)); true
                 }
                 R.id.nav_home -> {
-                    startActivity(Intent(this, TesteHomeActivity::class.java)); true
+                    startActivity(Intent(this, HomeActivity::class.java)); true
                 }
                 R.id.nav_config -> {
                     startActivity(Intent(this, Configuracoes::class.java)); true

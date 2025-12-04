@@ -27,5 +27,9 @@ data class ServicoListagemResponse(
     val mediaAvaliacao: Double?,
 
     @SerializedName("total_avaliacoes")
-    val totalAvaliacoes: Int?
+    val totalAvaliacoes: Int?,
+
+    var fotoPerfilUrl: String? = null,
+
+    var isFavorito: Boolean = false
 )

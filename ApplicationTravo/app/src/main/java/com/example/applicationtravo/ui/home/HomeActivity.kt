@@ -1,11 +1,18 @@
 package com.example.applicationtravo.ui.home
 
+import android.graphics.drawable.Drawable
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import android.content.Context
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -23,19 +30,28 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import android.widget.TextView
+import android.widget.ImageView
 
 class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var binding: ActivityHomeBinding
     private lateinit var mapView: MapView
+
+    private val infoWindowImageCache = mutableMapOf<String, Bitmap>()
+
     private var googleMap: GoogleMap? = null
     private var allServices = listOf<ServicoListagemResponse>()
+    private var selectedMarker: Marker? = null
+
+    private val markerList = mutableListOf<Marker>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +70,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
                     true
                 }
                 R.id.nav_teste_home -> {
-                    startActivity(Intent(this, TesteHomeActivity::class.java))
                     true
                 }
                 R.id.nav_config -> {
@@ -64,7 +79,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
                 else -> false
             }
         }
-
         setupFilters()
         fetchServices()
         setupLinkToListaServicos()
@@ -79,31 +93,73 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(fortaleza, 13f))
 
         googleMap?.setInfoWindowAdapter(object : GoogleMap.InfoWindowAdapter {
-            override fun getInfoWindow(marker: com.google.android.gms.maps.model.Marker): android.view.View? = null
-            override fun getInfoContents(marker: com.google.android.gms.maps.model.Marker): android.view.View {
-                val view = layoutInflater.inflate(R.layout.custom_info_window, null)
-                val imageView = view.findViewById<ImageView>(R.id.infoImage)
-                val titleView = view.findViewById<TextView>(R.id.infoTitle)
-                val addressView = view.findViewById<TextView>(R.id.infoAddress)
+
+            override fun getInfoWindow(marker: Marker): View? = null
+
+            override fun getInfoContents(marker: Marker): View? {
+                if (marker != selectedMarker) return null
 
                 val tag = marker.tag as? ServicoListagemResponse
-                titleView.text = tag?.nome ?: "Sem nome"
-                addressView.text = tag?.endereco ?: "Endereço não informado"
+                val v = layoutInflater.inflate(R.layout.custom_info_window, null)
 
+                val img = v.findViewById<ImageView>(R.id.infoImage)
+                val title = v.findViewById<TextView>(R.id.infoTitle)
+                val address = v.findViewById<TextView>(R.id.infoAddress)
+
+                title.text = tag?.nome ?: ""
+                address.text = tag?.endereco ?: ""
+
+                // tenta fotoPerfilUrl → imagemCapaUrl
+                val url = tag?.fotoPerfilUrl ?: tag?.imagemCapaUrl
+
+                // se realmente não tem imagem
+                if (url.isNullOrBlank()) {
+                    img.setImageBitmap(null)
+                    return v
+                }
+
+                // se está em cache → usa e retorna
+                val cached = infoWindowImageCache[url]
+                if (cached != null) {
+                    img.setImageBitmap(cached)
+                    return v
+                }
+
+                // carrega com Glide
                 Glide.with(this@HomeActivity)
-                    .load(tag?.imagemCapaUrl)
-                    .into(imageView)
+                    .asBitmap()
+                    .load(url)
+                    .into(object : CustomTarget<Bitmap>() {
+                        override fun onResourceReady(bitmap: Bitmap, transition: Transition<in Bitmap>?) {
+                            infoWindowImageCache[url] = bitmap
 
-                return view
+                            if (marker.isInfoWindowShown) {
+                                marker.hideInfoWindow()
+                                marker.showInfoWindow()
+                            }
+                        }
+
+                        override fun onLoadCleared(placeholder: Drawable?) {}
+                    })
+
+                return v
             }
+
+
         })
 
-        googleMap?.setOnInfoWindowClickListener { marker ->
-            val servico = marker.tag as? ServicoListagemResponse
-            servico?.let {
-                val intent = Intent(this@HomeActivity, DetalhesLocal::class.java)
-                intent.putExtra("SERVICO_ID", it.id)
-                startActivity(intent)
+        googleMap?.setOnMarkerClickListener { m ->
+            selectedMarker = m
+            m.showInfoWindow()
+            false
+        }
+
+        googleMap?.setOnInfoWindowClickListener { m ->
+            val s = m.tag as? ServicoListagemResponse
+            if (s != null) {
+                val i = Intent(this@HomeActivity, DetalhesLocal::class.java)
+                i.putExtra("SERVICO_ID", s.id)
+                startActivity(i)
             }
         }
 
@@ -112,7 +168,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun setupFilters() {
         val chipGroup = binding.chipGroup
-        val categories = listOf("Todos", "Restaurantes", "Lojas", "Parques")
+        val categories = listOf("Todos", "Favoritos", "Restaurantes", "Shoppings", "Lojas", "Parques")
 
         categories.forEachIndexed { index, category ->
             val chip = Chip(this).apply {
@@ -127,10 +183,11 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
             val chip = chipGroup.findViewById<Chip>(checkedId)
             val selected = chip?.text?.toString() ?: "Todos"
             updateCardsAndMap(selected)
-
-            // Recentrar o mapa em Fortaleza sempre que o filtro mudar
-            val fortaleza = LatLng(-3.71722, -38.54306)
-            googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(fortaleza, 13f))
+            googleMap?.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    LatLng(-3.71722, -38.54306), 13f
+                )
+            )
         }
     }
 
@@ -142,23 +199,25 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 val api = if (!token.isNullOrEmpty())
                     RetrofitService.getTravoServiceAPIWithToken(token)
-                else
-                    RetrofitService.getTravoServiceAPI()
+                else RetrofitService.getTravoServiceAPI()
 
                 val response = api.listarServicos()
 
                 if (response.isSuccessful) {
                     allServices = response.body() ?: emptyList()
-                    Log.d("HomeActivity", "Serviços carregados: ${allServices.size}")
-                } else {
-                    Log.e("HomeActivity", "Erro listarServicos(): ${response.code()}")
-                    allServices = emptyList()
-                }
+                    allServices.forEach { servico ->
+                        try {
+                            val anexoResponse = api.getProfilePic("servicos", servico.id)
+                            if (anexoResponse.isSuccessful) {
+                                servico.fotoPerfilUrl = anexoResponse.body()?.urlPublica
+                            }
+                        } catch (_: Exception) {}
+                    }
+                } else allServices = emptyList()
 
                 withContext(Dispatchers.Main) { updateCardsAndMap("Todos") }
 
             } catch (e: Exception) {
-                Log.e("HomeActivity", "Erro ao buscar serviços: ${e.message}")
                 allServices = emptyList()
                 withContext(Dispatchers.Main) { updateCardsAndMap("Todos") }
             }
@@ -169,9 +228,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         val container = binding.cardContainer
         container.removeAllViews()
         googleMap?.clear()
+        markerList.clear()
+        selectedMarker = null
 
         val typeMap = mapOf(
             "Todos" to null,
+            "Favoritos" to "favoritos",
             "Restaurantes" to "restaurant",
             "Lojas" to "store",
             "Shoppings" to "shopping",
@@ -179,11 +241,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         )
 
         val dbValue = typeMap[selectedType]
-
-        val filtered = if (dbValue == null) {
-            allServices
-        } else {
-            allServices.filter { it.tipo?.equals(dbValue, ignoreCase = true) == true }
+        val filtered = when (dbValue) {
+            null -> allServices
+            "favoritos" -> allServices.filter { it.isFavorito }
+            else -> allServices.filter {
+                it.tipo?.equals(dbValue, ignoreCase = true) == true
+            }
         }
 
         for (service in filtered) {
@@ -194,6 +257,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
             val address = cardView.findViewById<TextView>(R.id.cardAddress)
             val image = cardView.findViewById<ImageView>(R.id.cardImage)
             val likeButton = cardView.findViewById<ImageButton>(R.id.likeButton)
+            val ratingContainer = cardView.findViewById<LinearLayout>(R.id.ratingContainer)
             val tvRating = cardView.findViewById<TextView>(R.id.tvRating)
             val tvTotalRatings = cardView.findViewById<TextView>(R.id.tvTotalRatings)
 
@@ -203,26 +267,48 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
             address.text = service.endereco ?: "Endereço não informado"
 
             Glide.with(this)
-                .load(service.imagemCapaUrl)
+                .load(service.fotoPerfilUrl ?: service.imagemCapaUrl)
                 .into(image)
 
-            var liked = false
-            likeButton.setImageResource(R.drawable.ic_heart_border)
+            likeButton.setImageResource(
+                if (service.isFavorito) R.drawable.ic_heart_filled else R.drawable.ic_heart_border
+            )
+
             likeButton.setOnClickListener {
-                liked = !liked
+                service.isFavorito = !service.isFavorito
                 likeButton.setImageResource(
-                    if (liked) R.drawable.ic_heart_filled else R.drawable.ic_heart_border
+                    if (service.isFavorito) R.drawable.ic_heart_filled else R.drawable.ic_heart_border
                 )
             }
 
+            // ---- CLICK NO CARD INTEIRO (exceto elementos ignorados) ----
             cardView.setOnClickListener {
-                val intent = Intent(this@HomeActivity, DetalhesLocal::class.java)
-                intent.putExtra("SERVICO_ID", service.id)
-                startActivity(intent)
+
+                // Acha o marker correspondente
+                val marker = markerList.find { m ->
+                    val t = m.tag as? ServicoListagemResponse
+                    t?.id == service.id
+                }
+
+                if (marker != null) {
+                    selectedMarker = marker
+
+                    googleMap?.animateCamera(
+                        CameraUpdateFactory.newLatLngZoom(marker.position, 16f)
+                    )
+
+                    marker.showInfoWindow()
+                }
+            }
+
+            ratingContainer.setOnClickListener {
+                val i = Intent(this, DetalhesLocal::class.java)
+                i.putExtra("SERVICO_ID", service.id)
+                startActivity(i)
             }
 
             title.setOnClickListener {
-                val intent = Intent(this@HomeActivity, DetalhesLocal::class.java)
+                val intent = Intent(this, DetalhesLocal::class.java)
                 intent.putExtra("SERVICO_ID", service.id)
                 startActivity(intent)
             }
@@ -232,9 +318,13 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
             service.lat?.let { lat ->
                 service.lng?.let { lng ->
                     val marker = googleMap?.addMarker(
-                        MarkerOptions().position(LatLng(lat, lng)).title(service.nome)
+                        MarkerOptions()
+                            .position(LatLng(lat, lng))
+                            .icon(createMarkerIconWithTitle(service.nome, service.tipo))
+                            .anchor(0.5f, 1f)
                     )
                     marker?.tag = service
+                    if (marker != null) markerList.add(marker)
                 }
             }
         }
@@ -244,6 +334,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         val container = binding.cardContainer
         container.removeAllViews()
         googleMap?.clear()
+        markerList.clear()
+        selectedMarker = null
 
         val cardView = LayoutInflater.from(this)
             .inflate(R.layout.card_item_layout, container, false)
@@ -261,7 +353,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         address.text = service.endereco ?: "Endereço não informado"
 
         Glide.with(this)
-            .load(service.imagemCapaUrl)
+            .load(service.fotoPerfilUrl ?: service.imagemCapaUrl)
             .into(image)
 
         var liked = false
@@ -274,13 +366,26 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         cardView.setOnClickListener {
-            val intent = Intent(this@HomeActivity, DetalhesLocal::class.java)
-            intent.putExtra("SERVICO_ID", service.id)
-            startActivity(intent)
+
+            // Agora procura na markerList
+            val marker = markerList.find { m ->
+                val t = m.tag as? ServicoListagemResponse
+                t?.id == service.id
+            }
+
+            if (marker != null) {
+                selectedMarker = marker
+
+                googleMap?.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(marker.position, 16f)
+                )
+
+                marker.showInfoWindow()
+            }
         }
 
         title.setOnClickListener {
-            val intent = Intent(this@HomeActivity, DetalhesLocal::class.java)
+            val intent = Intent(this, DetalhesLocal::class.java)
             intent.putExtra("SERVICO_ID", service.id)
             startActivity(intent)
         }
@@ -289,9 +394,14 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
 
         service.lat?.let { lat ->
             service.lng?.let { lng ->
-                val position = LatLng(lat, lng)
-                val marker = googleMap?.addMarker(MarkerOptions().position(position).title(service.nome))
+                val marker = googleMap?.addMarker(
+                    MarkerOptions()
+                        .position(LatLng(lat, lng))
+                        .icon(createMarkerIconWithTitle(service.nome, service.tipo))
+                        .anchor(0.5f, 1f)
+                )
                 marker?.tag = service
+                marker?.showInfoWindow()
             }
         }
     }
@@ -301,7 +411,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         tvLink.paintFlags = tvLink.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         tvLink.setTextColor(getColor(R.color.teal_700))
         tvLink.setOnClickListener {
-            startActivity(Intent(this, com.example.applicationtravo.ui.listaServicos.ListaServicos::class.java))
+            startActivity(
+                Intent(
+                    this,
+                    com.example.applicationtravo.ui.listaServicos.ListaServicos::class.java
+                )
+            )
         }
     }
 
@@ -316,19 +431,27 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         if (filtered.isEmpty()) {
             binding.cardContainer.removeAllViews()
             googleMap?.clear()
+            markerList.clear()
+            selectedMarker = null
             return
         }
 
         val first = filtered.first()
         first.lat?.let { lat ->
             first.lng?.let { lng ->
-                googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lat, lng), 14f))
+                googleMap?.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(lat, lng), 14f
+                    )
+                )
             }
         }
 
         val container = binding.cardContainer
         container.removeAllViews()
         googleMap?.clear()
+        markerList.clear()
+        selectedMarker = null
 
         for (service in filtered) {
             val cardView = LayoutInflater.from(this)
@@ -347,7 +470,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
             address.text = service.endereco ?: "Endereço não informado"
 
             Glide.with(this)
-                .load(service.imagemCapaUrl)
+                .load(service.fotoPerfilUrl ?: service.imagemCapaUrl)
                 .into(image)
 
             var liked = false
@@ -363,9 +486,11 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
 
             service.lat?.let { lat ->
                 service.lng?.let { lng ->
-                    val position = LatLng(lat, lng)
                     val marker = googleMap?.addMarker(
-                        MarkerOptions().position(position).title(service.nome)
+                        MarkerOptions()
+                            .position(LatLng(lat, lng))
+                            .icon(createMarkerIconWithTitle(service.nome, service.tipo))
+                            .anchor(0.5f, 1f)
                     )
                     marker?.tag = service
                 }
@@ -381,7 +506,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         popup.anchorView = searchEdit
         popup.isModal = false
 
-        // Quando os serviços carregarem, adiciona ao adapter
         lifecycleScope.launch {
             val services = allServices
             adapter.clear()
@@ -402,6 +526,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 val filtered = allServices.mapNotNull { it.nome }
                     .filter { it.contains(query, ignoreCase = true) }
+
                 adapter.clear()
                 adapter.addAll(filtered)
                 adapter.notifyDataSetChanged()
@@ -421,8 +546,11 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 service.lat?.let { lat ->
                     service.lng?.let { lng ->
-                        val pos = LatLng(lat, lng)
-                        googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 17f))
+                        googleMap?.animateCamera(
+                            CameraUpdateFactory.newLatLngZoom(
+                                LatLng(lat, lng), 17f
+                            )
+                        )
                     }
                 }
                 updateCardsAndMapByService(service)
@@ -435,6 +563,63 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
             performSearch(query)
             true
         }
+    }
+
+    private fun createMarkerIconWithTitle(text: String, type: String?): BitmapDescriptor {
+        val view = LayoutInflater.from(this).inflate(R.layout.map_marker, null)
+        val tv = view.findViewById<TextView>(R.id.tvTitle)
+        val pin = view.findViewById<ImageView>(R.id.imgPin)
+        pin.setImageResource(getMarkerIconByType(type))
+        tv.text = text
+        view.measure(
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        )
+        view.layout(0, 0, view.measuredWidth, view.measuredHeight)
+        val bitmap = Bitmap.createBitmap(
+            view.measuredWidth,
+            view.measuredHeight,
+            Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        view.draw(canvas)
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
+
+    private fun getMarkerIconByType(type: String?): Int {
+        return when (type?.lowercase()) {
+            "restaurant" -> R.drawable.ic_restaurant_marker
+            "store" -> R.drawable.ic_store_marker
+            "park" -> R.drawable.ic_smile_marker
+            "shopping" -> R.drawable.ic_shopping_marker
+            else -> R.drawable.ic_default_marker
+        }
+    }
+
+    private fun loadInfoWindowImage(url: String, marker: Marker, imageView: ImageView) {
+
+        val cached = infoWindowImageCache[url]
+        if (cached != null) {
+            imageView.setImageBitmap(cached)
+            marker.showInfoWindow()
+            return
+        }
+
+        Glide.with(this)
+            .asBitmap()
+            .load(url)
+            .into(object : CustomTarget<Bitmap>() {
+                override fun onResourceReady(
+                    resource: Bitmap,
+                    transition: Transition<in Bitmap>?
+                ) {
+                    infoWindowImageCache[url] = resource
+                    imageView.setImageBitmap(resource)
+                    marker.showInfoWindow()
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {}
+            })
     }
 
     override fun onResume() { super.onResume(); mapView.onResume() }

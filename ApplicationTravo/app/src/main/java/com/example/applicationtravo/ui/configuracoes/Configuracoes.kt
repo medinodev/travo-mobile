@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.applicationtravo.R
-import com.example.applicationtravo.ui.TesteHomeActivity
+import com.example.applicationtravo.ui.home.HomeActivity
 import com.example.applicationtravo.ui.favoritos.Favoritos
 import com.example.applicationtravo.ui.listaCupons.ListaCupons
 import com.example.applicationtravo.ui.listaServicos.ListaServicos
@@ -57,7 +57,7 @@ class Configuracoes : AppCompatActivity() {
                 }
 
                 R.id.nav_home -> {
-                    startActivity(Intent(this, TesteHomeActivity::class.java))
+                    startActivity(Intent(this, HomeActivity::class.java))
                     true
                 }
 
