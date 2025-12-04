@@ -24,7 +24,6 @@ class CupomAdapter(
         val nome: TextView = view.findViewById(R.id.txtDesconto)
         val descricao: TextView = view.findViewById(R.id.txtLoja)
         val validade: TextView = view.findViewById(R.id.txtValidade)
-        val btnFav: ImageButton = view.findViewById(R.id.btn_favorite)
         val btnUse: Button = view.findViewById(R.id.btn_use)
         val txtCodigo: TextView = view.findViewById(R.id.txtCodigo)
     }
@@ -59,16 +58,6 @@ class CupomAdapter(
         else
             android.R.drawable.btn_star_big_off
 
-        holder.btnFav.setImageResource(icon)
-
-        holder.btnFav.setOnClickListener {
-            if (favoritos.contains(idCupom)) {
-                favoritos.remove(idCupom)
-            } else {
-                favoritos.add(idCupom)
-            }
-            notifyItemChanged(position)
-        }
 
         if (!cupom.codigo.isNullOrBlank()) {
             holder.txtCodigo.visibility = View.VISIBLE

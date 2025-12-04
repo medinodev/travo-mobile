@@ -27,8 +27,8 @@ class ListaCupons : AppCompatActivity() {
     private var mapaLojas: Map<Int, String> = emptyMap()
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: CupomAdapter
-    private lateinit var searchEditText: EditText
-    private lateinit var clearButton: ImageButton
+    private lateinit var searchEditText: com.google.android.material.textfield.TextInputEditText
+//    private lateinit var clearButton: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,35 +39,12 @@ class ListaCupons : AppCompatActivity() {
         recyclerView = findViewById(R.id.recycler_cupons)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        searchEditText = findViewById(R.id.search_cupons)
-        clearButton = findViewById(R.id.btn_clear)
+        searchEditText = findViewById(R.id.etSearch)
+//        clearButton = findViewById(R.id.btn_clear)
 
         carregarCupons()
-        configurarFiltros()
         configurarBottomNavigation()
         configurarBusca()
-
-        bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-
-                R.id.nav_descontos -> {
-                    startActivity(Intent(this, ListaCupons::class.java))
-                    true
-                }
-
-                R.id.nav_home -> {
-                    startActivity(Intent(this, TesteHomeActivity::class.java))
-                    true
-                }
-
-                R.id.nav_config -> {
-                    startActivity(Intent(this, Configuracoes::class.java))
-                    true
-                }
-
-                else -> false
-            }
-        }
     }
 
     private fun usarCupom(cupom: CupomResponse) {
@@ -172,35 +149,28 @@ class ListaCupons : AppCompatActivity() {
         })
 
 
-        clearButton.setOnClickListener {
-            searchEditText.text.clear()
-        }
+//        clearButton.setOnClickListener {
+//            searchEditText.text.clear()
+//        }
     }
 
     private fun configurarBottomNavigation() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        bottomNav.selectedItemId = R.id.nav_descontos
+        bottomNav.selectedItemId = R.id.nav_descontos // Garante que o ícone atual esteja selecionado
 
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
+                    // Ir para a Home/Lista de Serviços
                     startActivity(Intent(this, ListaServicos::class.java))
                     true
                 }
-                R.id.nav_descontos -> true
+                R.id.nav_descontos -> true // Já estamos aqui, só retorna true
                 R.id.nav_config -> {
                     startActivity(Intent(this, Configuracoes::class.java))
                     true
                 }
                 else -> false
-            }
-        }
-    }
-    private fun configurarFiltros() {
-        val btnFavoritos = findViewById<Button>(R.id.btn_favoritos)
-        btnFavoritos.setOnClickListener {
-            if (::adapter.isInitialized) {
-                adapter.mostrarFavoritos()
             }
         }
     }

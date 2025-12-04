@@ -20,8 +20,27 @@
         app:title="Cupons"
         app:titleCentered="false" />
 
+    <!-- Search Bar -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search_cupons"
+        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+        android:layout_width="match_parent"  android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginHorizontal="12dp"
+        app:startIconDrawable="@android:drawable/ic_menu_search"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="0dp"
+        app:boxCornerRadiusBottomEnd="0dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Search"
+            android:singleLine="true" />
 
-    <!-- Barra de busca -->
+    </com.google.android.material.textfield.TextInputLayout>
+    <!--
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,13 +54,12 @@
             android:layout_height="40dp"
             android:layout_weight="1"
             android:hint="Search"
-            android:background="@drawable/search_bar_bg"
-            android:drawableStart="@android:drawable/ic_menu_search"
+            android:background="@drawable/edittext_border_bg"  android:drawableStart="@android:drawable/ic_menu_search"
             android:drawablePadding="8dp"
             android:paddingStart="16dp"
             android:paddingEnd="8dp"
             android:inputType="text"
-            android:backgroundTint="@android:color/darker_gray" />
+            android:textColorHint="@android:color/darker_gray"        android:textColor="@android:color/black"            />
 
         <ImageButton
             android:id="@+id/btn_clear"
@@ -50,7 +68,7 @@
             android:src="@android:drawable/ic_menu_close_clear_cancel"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="Clear" />
-    </LinearLayout>
+    </LinearLayout>             -->
 
     <!-- Filtros -->
     <HorizontalScrollView
@@ -66,15 +84,6 @@
             android:orientation="horizontal"
             android:paddingBottom="8dp"
             android:gravity="center_vertical">
-
-            <Button
-                android:id="@+id/btn_favoritos"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Favoritos"
-                android:textColor="#333"
-                android:backgroundTint="#FFF" />
         </LinearLayout>
     </HorizontalScrollView>
 
@@ -93,7 +102,7 @@
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFC98D"
+        android:background="@color/colorPrimary"
         app:itemIconTint="@color/black"
         app:itemTextColor="@color/black"
         app:labelVisibilityMode="labeled"
